@@ -70,6 +70,11 @@ ls -l ~/mimic/
 ```
 2. Display the contents in the folders `hosp` and `icu` using Bash command `ls -l`. Why are these data files distributed as `.csv.gz` files instead of `.csv` (comma separated values) files? Read the page <https://mimic.mit.edu/docs/iv/> to understand what's in each folder.
 
+**Answer:** 
+```{bash}
+ls -l ~/mimic/hosp
+ls -l ~/mimic/icu
+```
 3. Briefly describe what Bash commands `zcat`, `zless`, `zmore`, and `zgrep` do.
 
 4. (Looping in Bash) What's the output of the following bash script?
