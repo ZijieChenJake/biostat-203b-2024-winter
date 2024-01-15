@@ -152,6 +152,14 @@ rm ./labevents.csv
 wget -nc http://www.gutenberg.org/cache/epub/42671/pg42671.txt
 ```
 Explain what `wget -nc` does. Do **not** put this text file `pg42671.txt` in Git. Complete the following loop to tabulate the number of times each of the four characters is mentioned using Linux commands.
+
+***Answer:***
+weget -nc downloads the file from the url if it does not already exist in the current directory.
+Elizabeth: 634
+Jane: 293
+Lydia: 171
+Darcy: 418
+
 ```{bash}
 #| eval: false
 wget -nc http://www.gutenberg.org/cache/epub/42671/pg42671.txt
@@ -159,19 +167,23 @@ for char in Elizabeth Jane Lydia Darcy
 do
   echo $char:
   # some bash commands here
+  grep -o -i $char pg42671.txt | wc -l
 done
 ```
 
 2. What's the difference between the following two commands?
 ```{bash}
-#| eval: false
+#| eval: True
 echo 'hello, world' > test1.txt
 ```
 and
 ```{bash}
-#| eval: false
+#| eval: True
 echo 'hello, world' >> test2.txt
 ```
+
+***Answer:***
+These two commands are different because the first command overwrites the file if it already exists, and the second command appends the text to the end of the file if it already exists.
 
 3. Using your favorite text editor (e.g., `vi`), type the following and save the file as `middle.sh`:
 ```{bash eval=FALSE}
@@ -182,10 +194,14 @@ head -n "$2" "$1" | tail -n "$3"
 ```
 Using `chmod` to make the file executable by the owner, and run
 ```{bash}
-#| eval: false
+#| eval: True
+chmod +x middle.sh
 ./middle.sh pg42671.txt 20 5
 ```
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?
+
+***Answer:***
+The output is the 5 lines starting from line 20 of the file pg42671.txt. `"$1"` is the first argument, `"$2"` is the second argument, and "$3" is the third argument. We need the first line of the shell script to tell the computer that this is a shell script.
 
 ## Q5. More fun with Linux
 
