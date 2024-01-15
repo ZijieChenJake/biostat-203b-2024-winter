@@ -3299,14 +3299,14 @@ total 6155968
  13G    ./labevents.csv
  118171368
 
-real    0m19.035s
-user    0m22.856s
-sys 0m1.765s
+real    0m19.303s
+user    0m22.962s
+sys 0m1.820s
  118171368 labevents.csv
 
-real    0m6.287s
-user    0m4.440s
-sys 0m1.436s</code></pre>
+real    0m6.231s
+user    0m4.430s
+sys 0m1.454s</code></pre>
 </div>
 </div>
 </section>
@@ -3362,11 +3362,68 @@ Language: English</code></pre>
 </div>
 </div>
 <p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script?</p>
-<p><strong><em>Answer:</em></strong> The output is the 5 lines starting from line 20 of the file pg42671.txt. <code>&quot;$1&quot;</code> is the first argument, <code>&quot;$2&quot;</code> is the second argument, and “$3” is the third argument. We need the first line of the shell script to tell the computer that this is a shell script.</p>
+<p><strong><em>Answer:</em></strong> The output is the 5 lines starting from line 20 of the file pg42671.txt. <code>&quot;$1&quot;</code> is the first argument which is file name, <code>&quot;$2&quot;</code> is the second argument which is end_line, and “$3” is the third argument which is num_lines. We need the first line of the shell script to tell the computer that this is a shell script.</p>
 </section>
 <section id="q5.-more-fun-with-linux" class="level2">
 <h2 class="anchored" data-anchor-id="q5.-more-fun-with-linux">Q5. More fun with Linux</h2>
 <p>Try following commands in Bash and interpret the results: <code>cal</code>, <code>cal 2024</code>, <code>cal 9 1752</code> (anything unusual?), <code>date</code>, <code>hostname</code>, <code>arch</code>, <code>uname -a</code>, <code>uptime</code>, <code>who am i</code>, <code>who</code>, <code>w</code>, <code>id</code>, <code>last | head</code>, <code>echo {con,pre}{sent,fer}{s,ed}</code>, <code>time sleep 5</code>, <code>history | tail</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cal</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cal</span> 2024</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">arch</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    January 2024      
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+ 7  8  9 10 11 12 13  
+14 _1_5 16 17 18 19 20  
+21 22 23 24 25 26 27  
+28 29 30 31           
+                      
+                            2024
+      January               February               March          
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6               1  2  3                  1  2  
+ 7  8  9 10 11 12 13   4  5  6  7  8  9 10   3  4  5  6  7  8  9  
+14 _1_5 16 17 18 19 20  11 12 13 14 15 16 17  10 11 12 13 14 15 16  
+21 22 23 24 25 26 27  18 19 20 21 22 23 24  17 18 19 20 21 22 23  
+28 29 30 31           25 26 27 28 29        24 25 26 27 28 29 30  
+                                            31                    
+
+       April                  May                   June          
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6            1  2  3  4                     1  
+ 7  8  9 10 11 12 13   5  6  7  8  9 10 11   2  3  4  5  6  7  8  
+14 15 16 17 18 19 20  12 13 14 15 16 17 18   9 10 11 12 13 14 15  
+21 22 23 24 25 26 27  19 20 21 22 23 24 25  16 17 18 19 20 21 22  
+28 29 30              26 27 28 29 30 31     23 24 25 26 27 28 29  
+                                            30                    
+
+        July                 August              September        
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6               1  2  3   1  2  3  4  5  6  7  
+ 7  8  9 10 11 12 13   4  5  6  7  8  9 10   8  9 10 11 12 13 14  
+14 15 16 17 18 19 20  11 12 13 14 15 16 17  15 16 17 18 19 20 21  
+21 22 23 24 25 26 27  18 19 20 21 22 23 24  22 23 24 25 26 27 28  
+28 29 30 31           25 26 27 28 29 30 31  29 30                 
+                                                                  
+
+      October               November              December        
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  
+       1  2  3  4  5                  1  2   1  2  3  4  5  6  7  
+ 6  7  8  9 10 11 12   3  4  5  6  7  8  9   8  9 10 11 12 13 14  
+13 14 15 16 17 18 19  10 11 12 13 14 15 16  15 16 17 18 19 20 21  
+20 21 22 23 24 25 26  17 18 19 20 21 22 23  22 23 24 25 26 27 28  
+27 28 29 30 31        24 25 26 27 28 29 30  29 30 31              
+                                                                  
+Mon Jan 15 15:00:10 PST 2024
+MacBook-Pro-6.attlocal.net
+arm64</code></pre>
+</div>
+</div>
+<p><strong><em>Answer:</em></strong> <code>cal</code> displays the calendar for the current month. <code>cal 2024</code> displays the calendar for the year 2024. <code>cal 9 1752</code> displays the calendar for September 1752. The calendar for September 1752 is unusual because it is missing 11 days. <code>date</code> displays the current date and time. <code>hostname</code> displays the name of the computer. <code>arch</code> displays the architecture of the computer. <code>uname -a</code> displays the operating system. <code>uptime</code> displays how long the computer has been running. <code>who am i</code> displays the user name. <code>who</code> displays the users currently logged in. <code>w</code> displays the users currently logged in and what they are doing. <code>id</code> displays the user and group IDs. <code>last | head</code> displays the last users logged in. <code>echo {con,pre}{sent,fer}{s,ed}</code> displays the words consents, conferred, presents, and preferred. <code>time sleep 5</code> displays how long it takes to run the command sleep 5. <code>history | tail</code> displays the last 10 commands run.</p>
 </section>
 <section id="q6.-book" class="level2">
 <h2 class="anchored" data-anchor-id="q6.-book">Q6. Book</h2>

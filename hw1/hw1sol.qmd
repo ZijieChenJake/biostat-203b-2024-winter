@@ -201,11 +201,23 @@ chmod +x middle.sh
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?
 
 ***Answer:***
-The output is the 5 lines starting from line 20 of the file pg42671.txt. `"$1"` is the first argument, `"$2"` is the second argument, and "$3" is the third argument. We need the first line of the shell script to tell the computer that this is a shell script.
+The output is the 5 lines starting from line 20 of the file pg42671.txt. `"$1"` is the first argument which is file name, `"$2"` is the second argument which is end_line, and "$3" is the third argument which is num_lines. We need the first line of the shell script to tell the computer that this is a shell script.
 
 ## Q5. More fun with Linux
 
 Try following commands in Bash and interpret the results: `cal`, `cal 2024`, `cal 9 1752` (anything unusual?), `date`, `hostname`, `arch`, `uname -a`, `uptime`, `who am i`, `who`, `w`, `id`, `last | head`, `echo {con,pre}{sent,fer}{s,ed}`, `time sleep 5`, `history | tail`.
+
+```{bash}
+cal
+cal 2024
+date
+hostname
+arch
+```
+
+***Answer:***
+`cal` displays the calendar for the current month. `cal 2024` displays the calendar for the year 2024. `cal 9 1752` displays the calendar for September 1752. The calendar for September 1752 is unusual because it is missing 11 days. `date` displays the current date and time. `hostname` displays the name of the computer. `arch` displays the architecture of the computer. `uname -a` displays the operating system. `uptime` displays how long the computer has been running. `who am i` displays the user name. `who` displays the users currently logged in. `w` displays the users currently logged in and what they are doing. `id` displays the user and group IDs. `last | head` displays the last users logged in. `echo {con,pre}{sent,fer}{s,ed}` displays the words consents, conferred, presents, and preferred. `time sleep 5` displays how long it takes to run the command sleep 5. `history | tail` displays the last 10 commands run.
+
 
 ## Q6. Book
 
