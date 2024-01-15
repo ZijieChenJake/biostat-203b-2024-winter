@@ -71,27 +71,78 @@ ls -l ~/mimic/
 2. Display the contents in the folders `hosp` and `icu` using Bash command `ls -l`. Why are these data files distributed as `.csv.gz` files instead of `.csv` (comma separated values) files? Read the page <https://mimic.mit.edu/docs/iv/> to understand what's in each folder.
 
 **Answer:** 
+".csv.gz" files are compressed files. They are compressed to save space and make it easier to transfer them over the internet."hosp" contains hospital level data for patients, and "icu" contains ICU level data for patients.
+
 ```{bash}
 ls -l ~/mimic/hosp
 ls -l ~/mimic/icu
 ```
 3. Briefly describe what Bash commands `zcat`, `zless`, `zmore`, and `zgrep` do.
 
+**Answer:**
+zcat: uncompressed the file and prints it to standard output.
+zless: allows you to view the contents of a compressed file one page at a time.
+zmore: allows you to view the contents of a compressed file one page at a time.
+zgrep: allows you to search inside compressed files.
+
 4. (Looping in Bash) What's the output of the following bash script?
+
+**Answer:**
+It displays detailed information for each file that matches the specified pattern in the hosp directory. The pattern {a,l,pa}*.gz matches files starting with 'a', 'l', or 'pa' in the hosp directory and having a .gz extension.
+
 ```{bash}
-#| eval: false
+#| eval: True
 for datafile in ~/mimic/hosp/{a,l,pa}*.gz
 do
   ls -l $datafile
 done
 ```
 Display the number of lines in each data file using a similar loop. (Hint: combine linux commands `zcat <` and `wc -l`.)
+```{bash}
+for datafile in ~/mimic/hosp/{a,l,pa}*.gz
+do
+  zcat < "$datafile" | wc -l
+done
+```
 
 5. Display the first few lines of `admissions.csv.gz`. How many rows are in this data file? How many unique patients (identified by `subject_id`) are in this data file? Do they match the number of patients listed in the `patients.csv.gz` file? (Hint: combine Linux commands `zcat <`, `head`/`tail`, `awk`, `sort`, `uniq`, `wc`, and so on.)
 
+**Answer:**
+There are 431232 rows in this data file. There are 180734 unique patients in this data file. They do not match the number of patients listed in the patients.csv.gz file. There are 299713 patients in the patients.csv.gz file.
+
+```{bash}
+zcat < ~/mimic/hosp/admissions.csv.gz | head -5
+zcat < ~/mimic/hosp/admissions.csv.gz | wc -l
+zcat < ~/mimic/hosp/admissions.csv.gz | awk -F, '{print $1}' | sort | uniq | wc -l
+zcat < ~/mimic/hosp/patients.csv.gz | wc -l
+```
+
+
 6. What are the possible values taken by each of the variable `admission_type`, `admission_location`, `insurance`, and `ethnicity`? Also report the count for each unique value of these variables. (Hint: combine Linux commands `zcat`, `head`/`tail`, `awk`, `uniq -c`, `wc`, and so on; skip the header line.)
 
+**Answer:**
+There are 9 possibilities for 'admission_type', 11 possibilities for 'admission_location', 3 possibilities for 'insurance' and 33 possibilities for 'Race'
+
+```{bash}
+zcat < ~/mimic/hosp/admissions.csv.gz | awk -F, '{print $6}' | sort | uniq -c
+zcat < ~/mimic/hosp/admissions.csv.gz | awk -F, '{print $8}' | sort | uniq -c
+zcat < ~/mimic/hosp/admissions.csv.gz | awk -F, '{print $10}' | sort | uniq -c
+zcat < ~/mimic/hosp/admissions.csv.gz | awk -F, '{print $13}' | sort | uniq -c
+```
+
 7. _To compress, or not to compress. That's the question._ Let's focus on the big data file `labevents.csv.gz`. Compare compressed gz file size to the uncompressed file size. Compare the run times of `zcat < ~/mimic/labevents.csv.gz | wc -l` versus `wc -l labevents.csv`. Discuss the trade off between storage and speed for big data files. (Hint: `gzip -dk < FILENAME.gz > ./FILENAME`. Remember to delete the large `labevents.csv` file after the exercise.)
+
+***Answer:***
+The compressed file size is 1.8 GB and the uncompressed file size is 12.8 GB. The run time for .csv.gz is 19.156s and the run time for .csv is 6.211s. The trade off between storage and speed for big data files is that compressed files take up less space but take longer to run, and uncompressed files take up more space but run faster.
+
+```{bash}
+gzip -dk < ~/mimic/hosp/labevents.csv.gz > ./labevents.csv
+du -h ~/mimic/hosp/labevents.csv.gz
+du -h ./labevents.csv
+time zcat < ~/mimic/hosp/labevents.csv.gz | wc -l
+time wc -l labevents.csv
+rm ./labevents.csv
+```
 
 ## Q4. Who's popular in Price and Prejudice
 
