@@ -50,6 +50,7 @@ This exercise (and later in this course) uses the [MIMIC-IV data v2.2](https://p
 **Answer:** I completed the CITI training and got the PhysioNet credential. The verification links are as follows: 
 <https://www.citiprogram.org/verify/?k05f74b00-25ff-4442-ac1c-25f27521e206-60370404>
 <https://www.citiprogram.org/verify/?w4919561d-bf24-4808-8e51-bbdd83d14c1f-60370404>
+![PhysioNet Credential](./PhysioNet-Credential.png)
 
 ## Q3. Linux Shell Commands
 
@@ -213,6 +214,16 @@ cal 2024
 date
 hostname
 arch
+uname -a
+uptime
+who am i
+who
+w
+id
+last | head
+echo {con,pre}{sent,fer}{s,ed}
+time sleep 5
+history | tail
 ```
 
 ***Answer:***
