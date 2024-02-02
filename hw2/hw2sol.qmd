@@ -63,16 +63,43 @@ There are quite a few utilities in R for reading plain text data files. Let us t
 
 ```{r}
 admissions <- read_csv("~/mimic/hosp/admissions.csv.gz")
-admissions <- read.csv(gzfile("~/mimic/hosp/admissions.csv.gz"))
-admissions <- fread(gzfile("~/mimic/hosp/admissions.csv.gz"))
+admissions <- read.csv("~/mimic/hosp/admissions.csv.gz")
+admissions <- fread("~/mimic/hosp/admissions.csv.gz")
 ```
 
 
 Which function is fastest? Is there difference in the (default) parsed data types? How much memory does each resultant dataframe or tibble use? (Hint: `system.time` measures run times; `pryr::object_size` measures memory usage.) 
 
+***Answer***
+'fread' is the fastest, and 'read.csv' is the slowest. The default parsed data types are different. 'read_csv' and 'fread' use tibble and data.table, respectively, while 'read.csv' uses 'data.frame'. The memory usage of 'fread' is the smallest, and 'read.csv' is the largest. 
+
+```{r}
+system.time(admissions <- read_csv("~/mimic/hosp/admissions.csv.gz"))
+pryr::object_size(admissions)
+```
+
+```{r}
+system.time(admissions <- read.csv("~/mimic/hosp/admissions.csv.gz"))
+pryr::object_size(admissions)
+```
+
+```{r}
+system.time(admissions <- fread("~/mimic/hosp/admissions.csv.gz"))
+pryr::object_size(admissions)
+```
+
+
 ### Q1.2 User-supplied data types
 
 Re-ingest `admissions.csv.gz` by indicating appropriate column data types in `read_csv`. Does the run time change? How much memory does the result tibble use? (Hint: `col_types` argument in `read_csv`.)
+
+```{r}
+admissions <- read_csv("~/mimic/hosp/admissions.csv.gz", col_types = cols())
+system.time(admissions <- read_csv("~/mimic/hosp/admissions.csv.gz", col_types = cols()))
+pryr::object_size(admissions)
+```
+***Answer***
+The run time is a little quicker than the default setting. The memory usage is the same as the default setting.
 
 ## Q2. Ingest big data files
 
@@ -97,9 +124,22 @@ zcat < ~/mimic/hosp/labevents.csv.gz | head -10
 
 Try to ingest `labevents.csv.gz` using `read_csv`. What happens? If it takes more than 5 minutes on your computer, then abort the program and report your findings. 
 
+```{r}
+#labevents <- read_csv("~/mimic/hosp/labevents.csv.gz")
+```
+
+***Answer***
+The process takes more than 5 minutes, and the memory usage is increasing and I may need a bigger memory to run this process. 
+
 ### Q2.2 Ingest selected columns of `labevents.csv.gz` by `read_csv`
 
 Try to ingest only columns `subject_id`, `itemid`, `charttime`, and `valuenum` in `labevents.csv.gz` using `read_csv`.  Does this solve the ingestion issue? (Hint: `col_select` argument in `read_csv`.)
+
+```{r}
+#labevents <- read_csv("~/mimic/hosp/labevents.csv.gz", col_select = c("subject_id", "itemid", "charttime", "valuenum"))
+```
+***Answer***
+The process takes shorter compare to the previous process, but it still takes more than 5 minutes. The memory usage is increasing.
 
 ### Q2.3 Ingest subset of `labevents.csv.gz`
 
@@ -111,7 +151,24 @@ Our first strategy to handle this big data file is to make a subset of the `labe
 
 In later exercises, we will only be interested in the following lab items: creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), and glucose (50931) and the following columns: `subject_id`, `itemid`, `charttime`, `valuenum`. Write a Bash command to extract these columns and rows from `labevents.csv.gz` and save the result to a new file `labevents_filtered.csv.gz` in the current working directory. (Hint: use `zcat <` to pipe the output of `labevents.csv.gz` to `awk` and then to `gzip` to compress the output. To save render time, put `#| eval: false` at the beginning of this code chunk.)
 
+```{bash}
+#| eval: false
+zcat < ~/mimic/hosp/labevents.csv.gz  | awk -F ',' 'BEGIN {OFS=","} NR==1 || ($5==50912 || $5==50971 || $5==50983 || $5==50902 || $5==50882 || $5==51221 || $5==51301 || $5==50931) {print $2, $5, $7, $10}' | gzip > labevents_filtered.csv.gz
+```
+
+```{bash}
+#This is the code I used for deleting the file
+#rm labevents_filtered.csv.gz
+```
 Display the first 10 lines of the new file `labevents_filtered.csv.gz`. How many lines are in this new file? How long does it take `read_csv` to ingest `labevents_filtered.csv.gz`?
+
+```{bash}
+zcat < labevents_filtered.csv.gz | head -10
+```
+
+```{r}
+system.time(labevents <- read_csv("labevents_filtered.csv.gz"))
+```
 
 ### Q2.4 Ingest `labevents.csv` by Apache Arrow
 
