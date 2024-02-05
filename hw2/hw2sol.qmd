@@ -189,6 +189,9 @@ gzip -d -c ~/mimic/hosp/labevents.csv.gz > labevents.csv
 
 Then use [`arrow::open_dataset`](https://arrow.apache.org/docs/r/reference/open_dataset.html) to ingest `labevents.csv`, select columns, and filter `itemid` as in Q2.3. How long does the ingest+select+filter process take? Display the number of rows and the first 10 rows of the result tibble, and make sure they match those in Q2.3. (Hint: use `dplyr` verbs for selecting columns and filtering rows.)
 
+***Answer***
+It takes 33 seconds to ingest `labevents.csv` and filter the selected columns. The number of rows in the result tibble is 24855909, and the first 10 rows of the result tibble match those in Q2.3.
+
 ```{r}
 labevents <- arrow::open_dataset("labevents.csv", format = "csv") %>%
   dplyr::select(subject_id, itemid, charttime, valuenum) %>%
@@ -219,7 +222,11 @@ Apache Arrow is a cross-language development platform for in-memory data. It spe
 
 Re-write the csv file `labevents.csv` in the binary Parquet format (Hint: [`arrow::write_dataset`](https://arrow.apache.org/docs/r/reference/write_dataset.html).) How large is the Parquet file(s)? How long does the ingest+select+filter process of the Parquet file(s) take? Display the number of rows and the first 10 rows of the result tibble and make sure they match those in Q2.3. (Hint: use `dplyr` verbs for selecting columns and filtering rows.)
 
+***Answer***
+The Parquet file `labevents.parquet` is 1.9 GB in size. It takes 10 seconds to ingest `labevents.parquet` and filter the selected columns. The number of rows in the result tibble is 24855909, and the first 10 rows of the result tibble match those in Q2.3.
+
 ```{r}
+labevents <- arrow::open_dataset("labevents.csv", format = "csv")
 arrow::write_dataset(labevents, "labevents.parquet", format = "parquet")
 labevents <- arrow::open_dataset("labevents.parquet", format = "parquet") %>%
   dplyr::select(subject_id, itemid, charttime, valuenum) %>%
@@ -238,7 +245,7 @@ head(labevents, 10)
 Write a few sentences to explain what is the Parquet format. Imagine you want to explain it to a layman in an elevator.
 
 ***Answer***
-Parquet is a columnar storage file format that is optimized for reading and writing large datasets. It is designed to be efficient and performant for big data processing. It is especially useful for analytics and business intelligence applications where large amounts of data are processed and analyzed.
+Parquet is a columnar storage file format that is optimized for reading and writing large datasets. It is designed to be efficient and performance for big data processing. It is especially useful for analytics and business intelligence applications where large amounts of data are processed and analyzed.
 
 
 ### Q2.6 DuckDB
@@ -249,27 +256,31 @@ Parquet is a columnar storage file format that is optimized for reading and writ
 
 Ingest the Parquet file, convert it to a DuckDB table by [`arrow::to_duckdb`](https://arrow.apache.org/docs/r/reference/to_duckdb.html), select columns, and filter rows as in Q2.5. How long does the ingest+convert+select+filter process take? Display the number of rows and the first 10 rows of the result tibble and make sure they match those in Q2.3. (Hint: use `dplyr` verbs for selecting columns and filtering rows.)
 
+***Answer***
+It takes 10 seconds to ingest `labevents.parquet`, convert it to a DuckDB table, and filter the selected columns. The number of rows in the result tibble is 24855909, and the first 10 rows of the result tibble match those in Q2.3.
+
 ```{r}
-labevents_duckdb <- arrow::to_duckdb(labevents, table_name = "labevents_duckdb")
-labevents <- labevents_duckdb %>%
+labevents_duckdb <- arrow::open_dataset("labevents.parquet", format = "parquet") %>%
+  arrow::to_duckdb() %>%
   dplyr::select(subject_id, itemid, charttime, valuenum) %>%
   dplyr::filter(itemid %in% c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)) %>%
   collect()
 
-system.time(labevents <- labevents_duckdb %>%
+system.time(labevents_duckdb <- arrow::open_dataset("labevents.parquet", format = "parquet") %>% 
+  arrow::to_duckdb() %>%
   dplyr::select(subject_id, itemid, charttime, valuenum) %>%
   dplyr::filter(itemid %in% c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)) %>%
   collect())
 
-nrow(labevents)
-head(labevents, 10)
+nrow(labevents_duckdb)
+head(labevents_duckdb, 10)
 ```
 
 
 Write a few sentences to explain what is DuckDB. Imagine you want to explain it to a layman in an elevator.
 
 ***Answer***
-DuckDB is an embeddable SQL OLAP database management system designed for analytical workloads. It is designed to be fast and efficient for analytical queries and is especially useful for big data processing and analytics. It is designed to be easy to use and integrate with other systems and applications.
+DuckDB is an database management system designed for analytical workloads. It is designed to be fast and efficient for analytically queries and is especially useful for big data processing and analytics. It is designed to be easy to use and integrate with other systems and applications.
 
 
 ```{bash}
