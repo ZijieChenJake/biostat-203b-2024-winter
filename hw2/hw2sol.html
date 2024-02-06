@@ -3115,7 +3115,7 @@ loaded via a namespace (and not attached):
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>memuse<span class="sc">::</span><span class="fu">Sys.meminfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Totalram:  16.000 GiB 
-Freeram:   60.859 MiB </code></pre>
+Freeram:   57.516 MiB </code></pre>
 </div>
 </div>
 <p>In this exercise, we explore various tools for ingesting the <a href="https://mimic.mit.edu/docs/iv/">MIMIC-IV</a> data introduced in <a href="https://ucla-biostat-203b.github.io/2024winter/hw/hw1/hw1.html">homework 1</a>.</p>
@@ -3180,7 +3180,7 @@ Freeram:   60.859 MiB </code></pre>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(admissions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;~/mimic/hosp/admissions.csv.gz&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.739   0.076   0.408 </code></pre>
+  0.734   0.076   0.416 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(admissions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3191,7 +3191,7 @@ Freeram:   60.859 MiB </code></pre>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(admissions <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;~/mimic/hosp/admissions.csv.gz&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.825   0.031   1.861 </code></pre>
+  1.858   0.035   1.898 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(admissions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3202,7 +3202,7 @@ Freeram:   60.859 MiB </code></pre>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(admissions <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;~/mimic/hosp/admissions.csv.gz&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.318   0.027   0.349 </code></pre>
+  0.324   0.027   0.358 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(admissions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3218,7 +3218,7 @@ Freeram:   60.859 MiB </code></pre>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(admissions <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;~/mimic/hosp/admissions.csv.gz&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.727   0.066   0.390 </code></pre>
+  0.733   0.072   0.396 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pryr<span class="sc">::</span><span class="fu">object_size</span>(admissions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3308,7 +3308,7 @@ Freeram:   60.859 MiB </code></pre>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(labevents <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;labevents_filtered.csv.gz&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 10.412   1.373   4.279 </code></pre>
+ 10.431   1.388   4.247 </code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -3339,7 +3339,7 @@ Freeram:   60.859 MiB </code></pre>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 32.542   2.167  30.602 </code></pre>
+ 32.647   2.180  30.641 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(labevents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3386,7 +3386,7 @@ Freeram:   60.859 MiB </code></pre>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  9.001   2.466   2.932 </code></pre>
+  9.147   2.542   2.966 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(labevents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3418,7 +3418,7 @@ Freeram:   60.859 MiB </code></pre>
 <img src="./duckdb_logo.png" width="20%">
 </p>
 <p>Ingest the Parquet file, convert it to a DuckDB table by <a href="https://arrow.apache.org/docs/r/reference/to_duckdb.html"><code>arrow::to_duckdb</code></a>, select columns, and filter rows as in Q2.5. How long does the ingest+convert+select+filter process take? Display the number of rows and the first 10 rows of the result tibble and make sure they match those in Q2.3. (Hint: use <code>dplyr</code> verbs for selecting columns and filtering rows.)</p>
-<p><strong><em>Answer</em></strong> It takes 10 seconds to ingest <code>labevents.parquet</code>, convert it to a DuckDB table, and filter the selected columns. The number of rows in the result tibble is 24855909, and the first 10 rows of the result tibble match those in Q2.3.</p>
+<p><strong><em>Answer</em></strong> It takes 10 seconds to ingest <code>labevents.parquet</code>, convert it to a DuckDB table, and filter the selected columns. The number of rows in the result tibble is 24855909, and I sort the duck _db file to get rid of uncertainty and it matches those in Q2.3.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>labevents_duckdb <span class="ot">&lt;-</span> arrow<span class="sc">::</span><span class="fu">open_dataset</span>(<span class="st">&quot;labevents.parquet&quot;</span>, <span class="at">format =</span> <span class="st">&quot;parquet&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  arrow<span class="sc">::</span><span class="fu">to_duckdb</span>() <span class="sc">%&gt;%</span></span>
@@ -3433,9 +3433,12 @@ Freeram:   60.859 MiB </code></pre>
 <span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  9.529   2.511   3.265 </code></pre>
+  9.539   2.453   3.114 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(labevents_duckdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>labevents_duckdb <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(labevents_duckdb, subject_id)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(labevents_duckdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 24855909</code></pre>
 </div>
@@ -3444,16 +3447,16 @@ Freeram:   60.859 MiB </code></pre>
 <pre><code># A tibble: 10 × 4
    subject_id itemid charttime           valuenum
         &lt;dbl&gt;  &lt;dbl&gt; &lt;dttm&gt;                 &lt;dbl&gt;
- 1   10002013  50983 2159-12-20 10:15:00    139  
- 2   10002013  50882 2160-01-04 10:10:00     27  
- 3   10002013  50902 2160-01-04 10:10:00    102  
- 4   10002013  50912 2160-01-04 10:10:00      0.9
- 5   10002013  50971 2160-01-04 10:10:00      3.9
- 6   10002013  50983 2160-01-04 10:10:00    138  
- 7   10002013  50931 2160-01-04 10:10:00    161  
- 8   10002013  51221 2160-01-04 10:10:00     35.8
- 9   10002013  51301 2160-01-04 10:10:00      7.9
-10   10002013  50931 2160-01-18 11:35:00    220  </code></pre>
+ 1   10000032  50882 2180-03-23 11:51:00     27  
+ 2   10000032  50902 2180-03-23 11:51:00    101  
+ 3   10000032  50912 2180-03-23 11:51:00      0.4
+ 4   10000032  50971 2180-03-23 11:51:00      3.7
+ 5   10000032  50983 2180-03-23 11:51:00    136  
+ 6   10000032  50931 2180-03-23 11:51:00     95  
+ 7   10000032  51221 2180-03-23 11:51:00     45.4
+ 8   10000032  51301 2180-03-23 11:51:00      3  
+ 9   10000032  51221 2180-05-06 22:25:00     42.6
+10   10000032  51301 2180-05-06 22:25:00      5  </code></pre>
 </div>
 </div>
 <p>Write a few sentences to explain what is DuckDB. Imagine you want to explain it to a layman in an elevator.</p>
@@ -3517,7 +3520,8 @@ Freeram:   60.859 MiB </code></pre>
 10000032,29079034,39553978,66056,2180-07-23 19:00:00,2180-07-23 19:59:00,220045,97,97,bpm,0
 10000032,29079034,39553978,66056,2180-07-23 19:00:00,2180-07-23 19:59:00,220179,93,93,mmHg,0
 10000032,29079034,39553978,66056,2180-07-23 19:00:00,2180-07-23 19:59:00,220181,56,56,mmHg,0
- 22502320</code></pre>
+zcat: (stdin): unexpected end of file
+ 18731127</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
