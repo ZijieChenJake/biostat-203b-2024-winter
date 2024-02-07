@@ -301,7 +301,7 @@ zcat < ~/mimic/icu/chartevents.csv.gz | head -10
 ```{bash}
 zcat < ~/mimic/icu/d_items.csv.gz | head -10
 ```
-In later exercises, we are interested in the vitals for ICU patients: heart rate (220045), mean non-invasive blood pressure (220181), systolic non-invasive blood pressure (220179), body temperature in Fahrenheit (223761), and respiratory rate (220210). Retrieve a subset of `chartevents.csv.gz` only containing these items, using the favorite method you learnt in Q2. 
+In later exercises, we are interested in the vitals for ICU patients: heart rate (220045), mean non-invasive blood pressure (220181), systolic non-invasive blood pressure (220179), body temperature in Fahrenheit (223761), and respiratory rate (220210). Retrieve a subset of `chartevents.csv.gz` only containing these items, using the favorite method you learnt in Q2.
 
 ```{bash}
 #| eval: false
@@ -315,6 +315,6 @@ zcat < chartevents_subset.csv.gz | wc -l
 ```
 
 ```{bash}
-#This is the code I used for deleting the file
+#This is the code I used for deleting the file.
 rm chartevents_subset.csv.gz
 ```
