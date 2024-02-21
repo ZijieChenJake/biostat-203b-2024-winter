@@ -53,11 +53,89 @@ similar visualization for the patient with `subject_id` 10013310 using ggplot.
 
 Hint: We need to pull information from data files `patients.csv.gz`, `admissions.csv.gz`, `transfers.csv.gz`, `labevents.csv.gz`, `procedures_icd.csv.gz`, `diagnoses_icd.csv.gz`, `d_icd_procedures.csv.gz`, and `d_icd_diagnoses.csv.gz`. For the big file `labevents.csv.gz`, use the Parquet format you generated in Homework 2. For reproducibility, make the Parquet folder `labevents_pq` available at the current working directory `hw3`, for example, by a symbolic link. Make your code reproducible.
 
+I have made the parquet file available at current working directory.
+
+```{r}
+sid <- 10013310
+sid_adt <- read_csv("~/mimic/hosp/transfers.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+
+sid_lab <- arrow::open_dataset("labevents_pq", format = "parquet") %>%
+  dplyr::filter(subject_id %in% sid) %>%
+  collect() %>%
+  print(width = Inf)
+
+sid_Proc <- read_csv("~/mimic/hosp/procedures_icd.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+
+sid_patient <- read_csv("~/mimic/hosp/patients.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+
+sid_admission <- read_csv("~/mimic/hosp/admissions.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+
+sid_Proc2 <- read_csv("~/mimic/hosp/d_icd_procedures.csv.gz") %>%
+  print(width = Inf)
+
+sid_dia <- read_csv("~/mimic/hosp/diagnoses_icd.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+
+sid_dia2 <- read_csv("~/mimic/hosp/d_icd_diagnoses.csv.gz") %>%
+  print(width = Inf)
+
+sid_dia_final <- inner_join(sid_dia, sid_dia2, by = "icd_code", "icd_version")
+
+count(sid_dia_final, long_title, sort = TRUE)
+sid_Proc_final <- inner_join(sid_Proc, sid_Proc2, by = "icd_code", "icd_version")
+
+sid_Proc_final$seq_num <- as.factor(sid_Proc$seq_num)
+sid_Proc_final$chartdate <- as.POSIXct(sid_Proc$chartdate)
+```
+
+
+```{r}
+sid_adt %>%
+  filter(eventtype != "discharge") %>%
+  ggplot() +
+  geom_point(data = sid_Proc_final, aes(x = chartdate, 
+                                  y = "Procedure",
+                                  shape = long_title)) +
+  geom_point(data = sid_lab, aes(x = charttime, 
+                                 y = "Lab"), 
+             shape = 3) +
+  geom_segment(aes(x = intime, 
+                   xend = outtime, 
+                   y = "ADT", 
+                   yend = "ADT",
+                   color = careunit,
+                   linewidth = str_detect(careunit, "(ICU|CCU)"))) +
+              guides(linewidth = FALSE) +
+              theme(legend.position = "bottom", legend.box = "vertical") +
+              labs(
+                x="Calendar Time",
+                y="",
+                color = "Care Unit",
+                shape = "Procedure",
+                title = str_c("Patient ",sid, ", ",sid_patient$gender, ", ",sid_patient$anchor_age, " years old, ",sid_admission$race),
+                subtitle = "Acute on chronic systolic (congestive) heart failure \nHyperlipidemia, unspecified \nLong term (current) use of insulin\nOther chronic pain"
+              ) +
+              scale_y_discrete(limits = c("Procedure","Lab","ADT"))
+
+```
+
+
 ### Q1.2 ICU stays
 
 ICU stays are a subset of ADT history. This figure shows the vitals of the patient `10001217` during ICU stays. The x-axis is the calendar time, and the y-axis is the value of the vital. The color of the line represents the type of vital. The facet grid shows the abbreviation of the vital and the stay ID.
 
-![](10001217_icu.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ucla-biostat-203b/2024winter/main/hw/hw3/10001217_icu.png" width="50%">
+</p >
 
 Do a similar visualization for the patient `10013310`.
 
