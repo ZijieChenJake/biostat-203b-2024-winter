@@ -139,6 +139,14 @@ ICU stays are a subset of ADT history. This figure shows the vitals of the patie
 
 Do a similar visualization for the patient `10013310`.
 
+```{r}
+sid <- 10001217
+sid_icu <- read_csv("~/mimic/icu/icustays.csv.gz") %>%
+  filter(subject_id == sid) %>%
+  print(width = Inf)
+```
+
+
 ## Q2. ICU stays
 
 `icustays.csv.gz` (<https://mimic.mit.edu/docs/iv/modules/icu/icustays/>) contains data about Intensive Care Units (ICU) stays. The first 10 lines are
