@@ -474,6 +474,20 @@ The final `mimic_icu_cohort` should have one row per ICU stay and columns for ea
 
 ![](mimic_icu_cohort.png)
 
+```{r}
+mimic_icu_cohort <- icustays_tble %>%
+  left_join(admissions_tble, by = c("subject_id","hadm_id")) %>%
+  left_join(patients_tble, by = "subject_id") %>%
+  left_join(labevents_tble, by = c("subject_id","stay_id")) %>%
+  left_join(chartevents_tble, by = c("subject_id","stay_id")) %>%
+  mutate(age_at_intime = year(intime) - anchor_year + anchor_age) %>%
+  filter(age_at_intime >= 18)
+
+mimic_icu_cohort
+```
+
+
+
 ## Q8. Exploratory data analysis (EDA)
 
 Summarize the following information about the ICU stay cohort `mimic_icu_cohort` using appropriate numerics or graphs:
@@ -485,3 +499,100 @@ Summarize the following information about the ICU stay cohort `mimic_icu_cohort`
 - Length of ICU stay `los` vs the average vital measurements within the first hour of ICU stay
 
 - Length of ICU stay `los` vs first ICU unit
+
+```{r}
+ggplot(mimic_icu_cohort, aes(x = age_at_intime, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Age at intime", x = "Age at ICU Admission", y = "Length of Stay (days)") +
+  theme_minimal()
+```
+```{r}
+mimic_icu_cohort %>%
+  group_by(race) %>%
+  summarise(mean_los = mean(los, na.rm = TRUE), .groups = "drop")
+```
+```{r}
+mimic_icu_cohort %>%
+  group_by(insurance) %>%
+  summarise(mean_los = mean(los, na.rm = TRUE), .groups = "drop")
+```
+
+```{r}
+mimic_icu_cohort %>%
+  group_by(marital_status) %>%
+  summarise(mean_los = mean(los, na.rm = TRUE), .groups = "drop")
+```
+
+```{r}
+ggplot(mimic_icu_cohort, aes(x = Bicarbonate, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Bicarbonate", x = "Bicarbonate", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Creatinine, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Creatinine", x = "Creatinine", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Chloride, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Chloride", x = "Chloride", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Glucose, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Glucose", x = "Glucose", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Potassium, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Potassium", x = "Potassium", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Sodium, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Sodium", x = "Sodium", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = Hematocrit, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Hematocrit", x = "Hematocrit", y = "Length of Stay (days)") +
+  theme_minimal()
+
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`White Blood Cells`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs White Blood Cells", x = "White Blood Cells", y = "Length of Stay (days)") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`Heart Rate`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Heart Rate", x = "Heart Rate", y = "Length of Stay (days)") +
+  theme_minimal()
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`Non Invasive Blood Pressure systolic`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Non Invasive Blood Pressure systolic", x = "Non Invasive Blood Pressure systolic", y = "Length of Stay (days)") +
+  theme_minimal()
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`Non Invasive Blood Pressure diastolic`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Non Invasive Blood Pressure diastolic", x = "Non Invasive Blood Pressure diastolice", y = "Length of Stay (days)") +
+  theme_minimal()
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`Respiratory Rate`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Respiratory Rate", x = "Respiratory Rate", y = "Length of Stay (days)") +
+  theme_minimal()
+ggplot(mimic_icu_cohort, aes(x = mimic_icu_cohort$`Temperature Fahrenheit`, y = los)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Length of ICU Stay vs Temperature Fahrenheit", x = "Temperature Fahrenheit", y = "Length of Stay (days)") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(mimic_icu_cohort, aes(x = first_careunit, y = los)) +
+  geom_boxplot() +
+  labs(title = "Length of ICU Stay vs First ICU Unit", x = "First ICU Unit", y = "Length of Stay (days)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
