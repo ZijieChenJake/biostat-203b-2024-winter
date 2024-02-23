@@ -340,9 +340,35 @@ zcat < ~/mimic/hosp/patients.csv.gz | head
 
 Import `patients.csv.gz` (<https://mimic.mit.edu/docs/iv/modules/hosp/patients/>) as a tibble `patients_tble`.
 
+```{r}
+patients_tble <- read_csv("~/mimic/hosp/patients.csv.gz")
+```
+
+
 ### Q4.2 Summary and visualization
 
 Summarize variables `gender` and `anchor_age` by graphics, and explain any patterns you see.
+
+```{r}
+ggplot(patients_tble, aes(x = gender)) +
+  geom_bar(fill = "turquoise", color = "black") +
+  labs(title = "Distribution of Gender in Patients",
+       x = "Gender",
+       y = "Count") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(patients_tble, aes(x = anchor_age)) +
+  geom_histogram(fill = "salmon", color = "black", bins = 30) +
+  labs(title = "Distribution of Anchor Age in Patients",
+       x = "Anchor Age",
+       y = "Frequency") +
+  theme_minimal()
+```
+
+***Answer***
+The distribution of gender shows that there are more female patients and the distribution of anchor age is approximate normal distribute on 60 and have some peak values at age lower than 25.
 
 ## Q5. Lab results
 
@@ -362,6 +388,36 @@ We are interested in the lab measurements of creatinine (50912), potassium (5097
 
 
 Hint: Use the Parquet format you generated in Homework 2. For reproducibility, make `labevents_pq` folder available at the current working directory `hw3`, for example, by a symbolic link.
+
+```{r}
+d_labitems_tble <- read_csv("~/mimic/hosp/d_labitems.csv.gz")
+lab_itemids <- c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)
+d_labitems_filtered <- filter(d_labitems_tble, itemid %in% lab_itemids) %>%
+  collect() %>%
+  print(width = Inf)
+
+labevents_filtered <- arrow::open_dataset("labevents_pq", format = "parquet") %>%
+  select(subject_id, itemid, valuenum, storetime) %>%
+  filter(itemid %in% lab_itemids) %>%      
+  filter(subject_id %in% icustays_tble$subject_id) %>%
+  collect() %>%
+  print(width = Inf)
+
+labevents_final <- labevents_filtered %>%
+  left_join(icustays_tble, by = "subject_id") %>%
+  group_by(subject_id, stay_id, itemid) %>%
+  filter(storetime < intime) %>%
+  arrange(storetime,.by_group = TRUE) %>%
+  slice_tail(n = 1) %>%
+  ungroup() %>%
+  select(subject_id, stay_id, itemid, valuenum) %>%
+  left_join(d_labitems_filtered , by = "itemid")
+
+labevents_tble <- labevents_final %>%
+  select(subject_id, stay_id, label, valuenum) %>%
+  pivot_wider(names_from = label, values_from = valuenum)
+labevents_tble
+```
 
 ## Q6. Vitals from charted events
 
