@@ -149,14 +149,14 @@ sid_icu <- read_csv("~/mimic/icu/icustays.csv.gz") %>%
 
 sid_chart <- arrow::open_dataset("chartevents_pq", format = "parquet") %>%
   dplyr::filter(subject_id %in% sid) %>%
-  dplyr::filter(itemid %in% c(220045, 220181,220179,223761,220210)) %>%
+  dplyr::filter(itemid %in% c(220045, 220180,220179,223761,220210)) %>%
   collect() %>%
   print(width = Inf)
 
 merged_data <- inner_join(sid_icu, sid_chart, by = "stay_id")
 
 merged_data$item_label <- factor(merged_data$itemid, 
-                                 levels = c('220045', '220181', '220179','220210', '223761'),
+                                 levels = c('220045', '220180', '220179','220210', '223761'),
                                  labels = c('HR', 
                                             'NBPd', 
                                             'NBPs', 
@@ -393,15 +393,13 @@ Hint: Use the Parquet format you generated in Homework 2. For reproducibility, m
 d_labitems_tble <- read_csv("~/mimic/hosp/d_labitems.csv.gz")
 lab_itemids <- c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)
 d_labitems_filtered <- filter(d_labitems_tble, itemid %in% lab_itemids) %>%
-  collect() %>%
-  print(width = Inf)
+  collect()
 
 labevents_filtered <- arrow::open_dataset("labevents_pq", format = "parquet") %>%
   select(subject_id, itemid, valuenum, storetime) %>%
   filter(itemid %in% lab_itemids) %>%      
   filter(subject_id %in% icustays_tble$subject_id) %>%
-  collect() %>%
-  print(width = Inf)
+  collect() 
 
 labevents_final <- labevents_filtered %>%
   left_join(icustays_tble, by = "subject_id") %>%
@@ -436,6 +434,31 @@ We are interested in the vitals for ICU patients: heart rate (220045), systolic 
 ![](chartevents_tble.png)
 
 Hint: Use the Parquet format you generated in Homework 2. For reproducibility, make `chartevents_pq` folder available at the current working directory, for example, by a symbolic link.
+
+```{r}
+d_items_tble <- read_csv("~/mimic/icu/d_items.csv.gz")
+vital_itemids <- c(220045, 220179, 220180, 223761, 220210)
+d_items_filtered <- filter(d_items_tble, itemid %in% vital_itemids) %>%
+  collect()
+
+chartevents_filtered <- arrow::open_dataset("chartevents_pq", format = "parquet") %>%
+  filter(itemid %in% vital_itemids) %>%      
+  filter(subject_id %in% icustays_tble$subject_id) %>%
+  collect() 
+
+chartevents_final <- chartevents_filtered %>%
+  left_join(icustays_tble, by = c("subject_id", "stay_id")) %>%
+  group_by(subject_id, stay_id, itemid) %>%
+  slice_min(charttime, n = 1) %>%
+  ungroup() %>%
+  select(subject_id, stay_id, itemid, valuenum) %>%
+  left_join(d_items_filtered, by = "itemid")
+
+chartevents_tble <- chartevents_final %>%
+  select(subject_id, stay_id, label, valuenum) %>%
+  pivot_wider(names_from = label, values_from = valuenum)
+chartevents_tble
+```
 
 ## Q7. Putting things together
 
