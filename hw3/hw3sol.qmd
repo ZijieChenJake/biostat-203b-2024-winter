@@ -142,7 +142,7 @@ Do a similar visualization for the patient `10013310`.
 I have made the chartevents parquet file available at current working directory.
 
 ```{r}
-sid <- 10001217
+sid <- 10013310
 sid_icu <- read_csv("~/mimic/icu/icustays.csv.gz") %>%
   filter(subject_id == sid) %>%
   print(width = Inf)
@@ -185,6 +185,7 @@ sid_icu %>%
   scale_x_datetime(date_labels = "%b %d %H:%M", date_breaks = "6 hours")
 ```
 
+This is the second way I tried for the same plot.
 ```{r}
 ggplot(data = merged_data, aes(x = charttime, y = valuenum, group = interaction(item_label, stay_id))) +
   geom_line(aes(color = factor(itemid))) +  
@@ -220,6 +221,8 @@ icustays_tble <- read_csv("~/mimic/icu/icustays.csv.gz")
 
 How many unique `subject_id`? Can a `subject_id` have multiple ICU stays? Summarize the number of ICU stays per `subject_id` by graphs. 
 
+***Answer***
+There are 50920 unique `subject_id`. A `subject_id` can have multiple ICU stays. The distribution of ICU stays per `subject_id` is shown in the histogram below.
 ```{r}
 num_unique_subjects <- icustays_tble %>% 
   summarise(n_unique_subjects = n_distinct(subject_id))
@@ -255,6 +258,11 @@ zcat < ~/mimic/hosp/admissions.csv.gz | head
 
 Import `admissions.csv.gz` as a tibble `admissions_tble`.
 
+```{r}
+admissions_tble <- read_csv("~/mimic/hosp/admissions.csv.gz")
+```
+
+
 ### Q3.2 Summary and visualization
 
 Summarize the following information by graphics and explain any patterns you see.
@@ -267,6 +275,59 @@ Summarize the following information by graphics and explain any patterns you see
 According to the [MIMIC-IV documentation](https://mimic.mit.edu/docs/iv/about/concepts/#date-shifting), 
 
 > All dates in the database have been shifted to protect patient confidentiality. Dates will be internally consistent for the same patient, but randomly distributed in the future. Dates of birth which occur in the present time are not true dates of birth. Furthermore, dates of birth which occur before the year 1900 occur if the patient is older than 89. In these cases, the patient’s age at their first admission has been fixed to 300.
+
+```{r}
+num_admissions_per_patient <- admissions_tble %>%
+  group_by(subject_id) %>%
+  summarise(n_admissions = n()) %>%
+  ungroup()
+
+ggplot(num_admissions_per_patient, aes(x = n_admissions)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Admissions per Patient",
+       x = "Number of Admissions",
+       y = "Count of Subjects") +
+  theme_minimal() +
+  xlim(0, 100)
+```
+
+```{r}
+admissions_tble %>%
+  mutate(admittime = as.POSIXct(admittime)) %>%
+  ggplot(aes(x = hour(admittime))) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Admission Hour",
+       x = "Hour of Admission",
+       y = "Count of Admissions") +
+  theme_minimal()
+```
+
+```{r}
+admissions_tble %>%
+  mutate(admittime = as.POSIXct(admittime)) %>%
+  ggplot(aes(x = minute(admittime))) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Distribution of Admission Minute",
+       x = "Minute of Admission",
+       y = "Count of Admissions") +
+  theme_minimal()
+```
+
+```{r}
+admissions_tble <- admissions_tble %>%
+  mutate(length_of_stay = as.numeric(dischtime - admittime, units = "days"))
+
+ggplot(admissions_tble, aes(x = length_of_stay)) +
+  geom_histogram(fill = "red", color = "blue", binwidth = 1) +
+  labs(title = "Length of Hospital Stay",
+       x = "Days",
+       y = "Frequency") +
+  theme_minimal() +
+  xlim(0, 100)
+```
+
+***Answer***
+It looks like the majority of patients have only one admission. The distribution of admission hour looks like there are more people greater than 13 and a little peak at 6. The distribution of length of hospital stay is right-skewed, with most patients staying for less than 30 days. 
 
 ## Q4. `patients` data
 
