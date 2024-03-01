@@ -144,7 +144,16 @@ This step is similar to Q7 of HW3. Using _one_ chain of pipes `|>` to perform fo
 
 ```{r}
 # # TODO
-# mimic_icu_cohort <- 
+mimic_icu_cohort <- icustays_tble |>
+  left_join(admissions_tble, by = c("subject_id","hadm_id")) |>
+  left_join(patients_tble, by = "subject_id") |>
+  mutate(age_intime = year(intime) - anchor_year + anchor_age) |>
+  filter(age_intime >= 18) |>
+  left_join(labevents_tble, by = c("subject_id", "stay_id")) |>
+  left_join(chartevents_tble, by = c("subject_id", "stay_id")) |>
+  arrange(subject_id, hadm_id, stay_id) |>
+  collect() |>
+  print(width = Inf)
 ```
 
 ### Q1.8 Preprocessing

@@ -3097,8 +3097,8 @@ loaded via a namespace (and not attached):
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>memuse<span class="sc">::</span><span class="fu">Sys.meminfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Totalram:   16.000 GiB 
-Freeram:   305.625 MiB </code></pre>
+<pre><code>Totalram:  16.000 GiB 
+Freeram:    3.925 GiB </code></pre>
 </div>
 </div>
 <p>Load database libraries and the tidyverse frontend:</p>
@@ -3452,7 +3452,160 @@ ORDER BY is ignored in subqueries without LIMIT
 <p>This step is similar to Q7 of HW3. Using <em>one</em> chain of pipes <code>|&gt;</code> to perform following data wrangling steps: (i) start with the <code>icustays_tble</code>, (ii) merge in admissions and patients tables, (iii) keep adults only (age at ICU intime &gt;= 18), (iv) merge in the labevents and chartevents tables, (v) <code>collect</code> the tibble.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # </span><span class="al">TODO</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mimic_icu_cohort &lt;- </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="ot">&lt;-</span> icustays_tble <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(admissions_tble, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;subject_id&quot;</span>,<span class="st">&quot;hadm_id&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(patients_tble, <span class="at">by =</span> <span class="st">&quot;subject_id&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_intime =</span> <span class="fu">year</span>(intime) <span class="sc">-</span> anchor_year <span class="sc">+</span> anchor_age) <span class="sc">|&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age_intime <span class="sc">&gt;=</span> <span class="dv">18</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(labevents_tble, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;subject_id&quot;</span>, <span class="st">&quot;stay_id&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(chartevents_tble, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;subject_id&quot;</span>, <span class="st">&quot;stay_id&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(subject_id, hadm_id, stay_id) <span class="sc">|&gt;</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ORDER BY is ignored in subqueries without LIMIT
+ℹ Do you need to move arrange() later in the pipeline or use window_order() instead?
+ORDER BY is ignored in subqueries without LIMIT
+ℹ Do you need to move arrange() later in the pipeline or use window_order() instead?
+ORDER BY is ignored in subqueries without LIMIT
+ℹ Do you need to move arrange() later in the pipeline or use window_order() instead?</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 73,181 × 41
+   subject_id  hadm_id  stay_id first_careunit                                  
+        &lt;int&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;                                           
+ 1   10000032 29079034 39553978 Medical Intensive Care Unit (MICU)              
+ 2   10000980 26913865 39765666 Medical Intensive Care Unit (MICU)              
+ 3   10001217 24597018 37067082 Surgical Intensive Care Unit (SICU)             
+ 4   10001217 27703517 34592300 Surgical Intensive Care Unit (SICU)             
+ 5   10001725 25563031 31205490 Medical/Surgical Intensive Care Unit (MICU/SICU)
+ 6   10001884 26184834 37510196 Medical Intensive Care Unit (MICU)              
+ 7   10002013 23581541 39060235 Cardiac Vascular Intensive Care Unit (CVICU)    
+ 8   10002155 20345487 32358465 Medical Intensive Care Unit (MICU)              
+ 9   10002155 23822395 33685454 Coronary Care Unit (CCU)                        
+10   10002155 28994087 31090461 Medical/Surgical Intensive Care Unit (MICU/SICU)
+   last_careunit                                    intime             
+   &lt;chr&gt;                                            &lt;dttm&gt;             
+ 1 Medical Intensive Care Unit (MICU)               2180-07-23 14:00:00
+ 2 Medical Intensive Care Unit (MICU)               2189-06-27 08:42:00
+ 3 Surgical Intensive Care Unit (SICU)              2157-11-20 19:18:02
+ 4 Surgical Intensive Care Unit (SICU)              2157-12-19 15:42:24
+ 5 Medical/Surgical Intensive Care Unit (MICU/SICU) 2110-04-11 15:52:22
+ 6 Medical Intensive Care Unit (MICU)               2131-01-11 04:20:05
+ 7 Cardiac Vascular Intensive Care Unit (CVICU)     2160-05-18 10:00:53
+ 8 Medical Intensive Care Unit (MICU)               2131-03-09 21:33:00
+ 9 Coronary Care Unit (CCU)                         2129-08-04 12:45:00
+10 Medical/Surgical Intensive Care Unit (MICU/SICU) 2130-09-24 00:50:00
+   outtime               los admittime           dischtime          
+   &lt;dttm&gt;              &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;             
+ 1 2180-07-23 23:50:47 0.410 2180-07-23 12:35:00 2180-07-25 17:55:00
+ 2 2189-06-27 20:38:27 0.498 2189-06-27 07:38:00 2189-07-03 03:00:00
+ 3 2157-11-21 22:08:00 1.12  2157-11-18 22:56:00 2157-11-25 18:00:00
+ 4 2157-12-20 14:27:41 0.948 2157-12-18 16:58:00 2157-12-24 14:55:00
+ 5 2110-04-12 23:59:56 1.34  2110-04-11 15:08:00 2110-04-14 15:00:00
+ 6 2131-01-20 08:27:30 9.17  2131-01-07 20:39:00 2131-01-20 05:15:00
+ 7 2160-05-19 17:33:33 1.31  2160-05-18 07:45:00 2160-05-23 13:30:00
+ 8 2131-03-10 18:09:21 0.859 2131-03-09 20:33:00 2131-03-10 01:55:00
+ 9 2129-08-10 17:02:38 6.18  2129-08-04 12:44:00 2129-08-18 16:53:00
+10 2130-09-27 22:13:41 3.89  2130-09-23 21:59:00 2130-09-29 18:55:00
+   deathtime           admission_type              admit_provider_id
+   &lt;dttm&gt;              &lt;chr&gt;                       &lt;chr&gt;            
+ 1 NA                  EW EMER.                    P30KEH           
+ 2 NA                  EW EMER.                    P30KEH           
+ 3 NA                  EW EMER.                    P4645A           
+ 4 NA                  DIRECT EMER.                P99698           
+ 5 NA                  EW EMER.                    P35SU0           
+ 6 2131-01-20 05:15:00 OBSERVATION ADMIT           P874LG           
+ 7 NA                  SURGICAL SAME DAY ADMISSION P47E1G           
+ 8 2131-03-10 21:53:00 EW EMER.                    P80515           
+ 9 NA                  EW EMER.                    P05HUO           
+10 NA                  EW EMER.                    P3529J           
+   admission_location discharge_location           insurance language
+   &lt;chr&gt;              &lt;chr&gt;                        &lt;chr&gt;     &lt;chr&gt;   
+ 1 EMERGENCY ROOM     HOME                         Medicaid  ENGLISH 
+ 2 EMERGENCY ROOM     HOME HEALTH CARE             Medicare  ENGLISH 
+ 3 EMERGENCY ROOM     HOME HEALTH CARE             Other     ?       
+ 4 PHYSICIAN REFERRAL HOME HEALTH CARE             Other     ?       
+ 5 PACU               HOME                         Other     ENGLISH 
+ 6 EMERGENCY ROOM     DIED                         Medicare  ENGLISH 
+ 7 PHYSICIAN REFERRAL HOME HEALTH CARE             Medicare  ENGLISH 
+ 8 EMERGENCY ROOM     DIED                         Other     ENGLISH 
+ 9 PROCEDURE SITE     CHRONIC/LONG TERM ACUTE CARE Other     ENGLISH 
+10 EMERGENCY ROOM     HOME HEALTH CARE             Other     ENGLISH 
+   marital_status race                   edregtime           edouttime          
+   &lt;chr&gt;          &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;             
+ 1 WIDOWED        WHITE                  2180-07-23 05:54:00 2180-07-23 14:00:00
+ 2 MARRIED        BLACK/AFRICAN AMERICAN 2189-06-27 06:25:00 2189-06-27 08:42:00
+ 3 MARRIED        WHITE                  2157-11-18 17:38:00 2157-11-19 01:24:00
+ 4 MARRIED        WHITE                  NA                  NA                 
+ 5 MARRIED        WHITE                  NA                  NA                 
+ 6 MARRIED        BLACK/AFRICAN AMERICAN 2131-01-07 13:36:00 2131-01-07 22:13:00
+ 7 SINGLE         OTHER                  NA                  NA                 
+ 8 MARRIED        WHITE                  2131-03-09 19:14:00 2131-03-09 21:33:00
+ 9 MARRIED        WHITE                  2129-08-04 11:00:00 2129-08-04 12:35:00
+10 MARRIED        WHITE                  2130-09-23 19:59:00 2130-09-24 00:50:00
+   hospital_expire_flag gender anchor_age anchor_year anchor_year_group
+                  &lt;int&gt; &lt;chr&gt;       &lt;int&gt;       &lt;int&gt; &lt;chr&gt;            
+ 1                    0 F              52        2180 2014 - 2016      
+ 2                    0 F              73        2186 2008 - 2010      
+ 3                    0 F              55        2157 2011 - 2013      
+ 4                    0 F              55        2157 2011 - 2013      
+ 5                    0 F              46        2110 2011 - 2013      
+ 6                    1 F              68        2122 2008 - 2010      
+ 7                    0 F              53        2156 2008 - 2010      
+ 8                    1 F              80        2128 2008 - 2010      
+ 9                    0 F              80        2128 2008 - 2010      
+10                    0 F              80        2128 2008 - 2010      
+   dod        age_intime `White Blood Cells` Creatinine Bicarbonate Sodium
+   &lt;date&gt;          &lt;int&gt;               &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+ 1 2180-09-09         52                 6.9        0.7          25    126
+ 2 2193-08-26         76                 5.3        2.3          21    144
+ 3 NA                 55                15.7        0.6          22    142
+ 4 NA                 55                 5.4        0.5          30    142
+ 5 NA                 46                NA         NA            NA    139
+ 6 2131-01-20         77                12.2        1.1          30    130
+ 7 NA                 57                 7.2        0.9          24    137
+ 8 2131-03-10         83                 9.8        1.4          26    120
+ 9 2131-03-10         81                 7.9        1.1          24    139
+10 2131-03-10         82                17.9        2.8          23    135
+   Hematocrit Glucose Potassium Chloride `Non Invasive Blood Pressure systolic`
+        &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;                                  &lt;dbl&gt;
+ 1       41.1     102       6.7       95                                     84
+ 2       27.3      89       3.9      109                                    150
+ 3       38.1     112       4.2      108                                    151
+ 4       37.4      87       4.1      104                                    167
+ 5       NA        NA       4.1       98                                     73
+ 6       39.7     141       4.5       88                                    180
+ 7       34.9     288       3.5      102                                    104
+ 8       22.4     133       5.7       85                                    109
+ 9       39.7     138       4.6      105                                    126
+10       25.5     117       4.9       98                                    118
+   `Heart Rate` `Non Invasive Blood Pressure diastolic` `Respiratory Rate`
+          &lt;dbl&gt;                                   &lt;dbl&gt;              &lt;dbl&gt;
+ 1           91                                      48                 24
+ 2           77                                      77                 23
+ 3           86                                      90                 18
+ 4           96                                      95                 11
+ 5           55                                      56                 19
+ 6           38                                      12                 16
+ 7           80                                      70                 14
+ 8           98                                      65                 23
+ 9           68                                      61                 18
+10           94                                      51                 18
+   `Temperature Fahrenheit`
+                      &lt;dbl&gt;
+ 1                     98.7
+ 2                     98  
+ 3                     98.5
+ 4                     97.6
+ 5                     97.7
+ 6                     98.1
+ 7                     97.2
+ 8                     97.7
+ 9                     95.9
+10                     96.9
+# ℹ 73,171 more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="q1.8-preprocessing" class="level3">
@@ -3466,20 +3619,20 @@ ORDER BY is ignored in subqueries without LIMIT
 <h3 class="anchored" data-anchor-id="q1.9-save-the-final-tibble">Q1.9 Save the final tibble</h3>
 <p>Save the final tibble to an R data file <code>mimic_icu_cohort.rds</code> in the <code>mimiciv_shiny</code> folder.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#mimic_icu_cohort |&gt;</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># write_rds(&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;, compress = &quot;gz&quot;)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#mimic_icu_cohort |&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># write_rds(&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;, compress = &quot;gz&quot;)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Close database connection and clear workspace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Although it is not a good practice to add big data files to git, for grading purpose, please add <code>mimic_icu_cohort.rds</code> to your git repository.</p>
 </section>
