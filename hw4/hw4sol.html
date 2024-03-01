@@ -3097,8 +3097,8 @@ loaded via a namespace (and not attached):
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>memuse<span class="sc">::</span><span class="fu">Sys.meminfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Totalram:  16.000 GiB 
-Freeram:    1.318 GiB </code></pre>
+<pre><code>Totalram:   16.000 GiB 
+Freeram:   305.625 MiB </code></pre>
 </div>
 </div>
 <p>Load database libraries and the tidyverse frontend:</p>
@@ -3388,15 +3388,71 @@ ORDER BY is ignored in subqueries without LIMIT
 <p>Connect to <code>chartevents</code> table and retrieve a subset that only contain subjects who appear in <code>icustays_tble</code> and the chart events listed in HW3. Only keep the first chart events during ICU stay and pivot chart events to become variables/columns. Write all steps in <em>one</em> chain of pipes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # </span><span class="al">TODO</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># chartevents_tble &lt;- </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>d_items <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con_bq, <span class="st">&quot;d_items&quot;</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>chartevents_tble <span class="ot">&lt;-</span> <span class="fu">tbl</span>(con_bq, <span class="st">&quot;chartevents&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(itemid <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">220045</span>, <span class="dv">220179</span>, <span class="dv">220180</span>, <span class="dv">223761</span>, <span class="dv">220210</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">semi_join</span>(icustays_tble, <span class="at">by =</span> <span class="st">&quot;subject_id&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(icustays_tble, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;subject_id&quot;</span>, <span class="st">&quot;stay_id&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">group_by</span>(subject_id, stay_id, itemid) <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">slice_min</span>(charttime) <span class="sc">|&gt;</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(subject_id, stay_id, itemid, valuenum) <span class="sc">|&gt;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(d_items, <span class="at">by =</span> <span class="st">&quot;itemid&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(subject_id, stay_id, label, valuenum) <span class="sc">|&gt;</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> label, <span class="at">values_from =</span> valuenum) <span class="sc">|&gt;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a> <span class="fu">arrange</span>(subject_id, stay_id) <span class="sc">|&gt;</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:     SQL [?? x 7]
+# Database:   BigQueryConnection
+# Ordered by: subject_id, stay_id
+   subject_id  stay_id `Non Invasive Blood Pressure systolic` `Heart Rate`
+        &lt;int&gt;    &lt;int&gt;                                  &lt;dbl&gt;        &lt;dbl&gt;
+ 1   10000032 39553978                                     84           91
+ 2   10000980 39765666                                    150           77
+ 3   10001217 34592300                                    167           96
+ 4   10001217 37067082                                    151           86
+ 5   10001725 31205490                                     73           55
+ 6   10001884 37510196                                    180           38
+ 7   10002013 39060235                                    104           80
+ 8   10002155 31090461                                    118           94
+ 9   10002155 32358465                                    109           98
+10   10002155 33685454                                    126           68
+   `Non Invasive Blood Pressure diastolic` `Respiratory Rate`
+                                     &lt;dbl&gt;              &lt;dbl&gt;
+ 1                                      48                 24
+ 2                                      77                 23
+ 3                                      95                 11
+ 4                                      90                 18
+ 5                                      56                 19
+ 6                                      12                 16
+ 7                                      70                 14
+ 8                                      51                 18
+ 9                                      65                 23
+10                                      61                 18
+   `Temperature Fahrenheit`
+                      &lt;dbl&gt;
+ 1                     98.7
+ 2                     98  
+ 3                     97.6
+ 4                     98.5
+ 5                     97.7
+ 6                     98.1
+ 7                     97.2
+ 8                     96.9
+ 9                     97.7
+10                     95.9
+# ℹ more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="q1.7-put-things-together" class="level3">
 <h3 class="anchored" data-anchor-id="q1.7-put-things-together">Q1.7 Put things together</h3>
 <p>This step is similar to Q7 of HW3. Using <em>one</em> chain of pipes <code>|&gt;</code> to perform following data wrangling steps: (i) start with the <code>icustays_tble</code>, (ii) merge in admissions and patients tables, (iii) keep adults only (age at ICU intime &gt;= 18), (iv) merge in the labevents and chartevents tables, (v) <code>collect</code> the tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # </span><span class="al">TODO</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mimic_icu_cohort &lt;- </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # </span><span class="al">TODO</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mimic_icu_cohort &lt;- </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="q1.8-preprocessing" class="level3">
@@ -3410,20 +3466,20 @@ ORDER BY is ignored in subqueries without LIMIT
 <h3 class="anchored" data-anchor-id="q1.9-save-the-final-tibble">Q1.9 Save the final tibble</h3>
 <p>Save the final tibble to an R data file <code>mimic_icu_cohort.rds</code> in the <code>mimiciv_shiny</code> folder.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#mimic_icu_cohort |&gt;</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># write_rds(&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;, compress = &quot;gz&quot;)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#mimic_icu_cohort |&gt;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># write_rds(&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;, compress = &quot;gz&quot;)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Close database connection and clear workspace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Although it is not a good practice to add big data files to git, for grading purpose, please add <code>mimic_icu_cohort.rds</code> to your git repository.</p>
 </section>

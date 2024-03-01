@@ -121,7 +121,21 @@ labevents_tble <- tbl(con_bq, "labevents") |>
 Connect to `chartevents` table and retrieve a subset that only contain subjects who appear in `icustays_tble` and the chart events listed in HW3. Only keep the first chart events during ICU stay and pivot chart events to become variables/columns. Write all steps in _one_ chain of pipes.
 ```{r}
 # # TODO
-# chartevents_tble <- 
+d_items <- tbl(con_bq, "d_items")
+
+chartevents_tble <- tbl(con_bq, "chartevents") |>
+ filter(itemid %in% c(220045, 220179, 220180, 223761, 220210)) |>
+ semi_join(icustays_tble, by = "subject_id") |>
+ left_join(icustays_tble, by = c("subject_id", "stay_id")) |>
+ group_by(subject_id, stay_id, itemid) |>
+ slice_min(charttime) |>
+ ungroup() |>
+ select(subject_id, stay_id, itemid, valuenum) |>
+ left_join(d_items, by = "itemid") |>
+ select(subject_id, stay_id, label, valuenum) |>
+ pivot_wider(names_from = label, values_from = valuenum) |>
+ arrange(subject_id, stay_id) |>
+ print(width = Inf)
 ```
 
 ### Q1.7 Put things together
