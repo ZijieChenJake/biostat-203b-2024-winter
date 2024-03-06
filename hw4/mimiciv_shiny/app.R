@@ -49,7 +49,8 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  helpText("Select a patient."),
-                 textInput("patientID", "Patient ID"),
+                 selectizeInput("patientID", "Patient ID",
+                                choices = NULL)
                ),
                mainPanel(
                  plotOutput("patientDetails")
@@ -57,7 +58,7 @@ ui <- fluidPage(
              ))
   )
 )
-server <- function(input, output) {
+server <- function(input, output, session) {
   dataReactive <- reactive({
     if(input$variable == "labevents"){
       data <- mimic_icu_cohort %>%
@@ -105,6 +106,8 @@ server <- function(input, output) {
     print(plot)
   })  
 #Second Tab
+   patient_ids <- patients %>% select(subject_id) %>% collect() %>% pull(subject_id)
+   updateSelectizeInput(session, "patientID", choices = patient_ids, server = TRUE)
     dataReactive2 <- reactive({
       sid <- as.numeric(input$patientID)
       sid_info <- patients %>%
