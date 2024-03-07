@@ -3097,8 +3097,8 @@ loaded via a namespace (and not attached):
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>memuse<span class="sc">::</span><span class="fu">Sys.meminfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Totalram:  16.000 GiB 
-Freeram:    2.436 GiB </code></pre>
+<pre><code>Totalram:   16.000 GiB 
+Freeram:   310.844 MiB </code></pre>
 </div>
 </div>
 <p>Load database libraries and the tidyverse frontend:</p>
@@ -3355,30 +3355,30 @@ ORDER BY is ignored in subqueries without LIMIT
 <pre><code># Source:     SQL [?? x 10]
 # Database:   BigQueryConnection
 # Ordered by: subject_id, stay_id
-   subject_id  stay_id Glucose Hematocrit Chloride Creatinine
-        &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
- 1   10000032 39553978     102       41.1       95        0.7
- 2   10000980 39765666      89       27.3      109        2.3
- 3   10001217 34592300      87       37.4      104        0.5
- 4   10001217 37067082     112       38.1      108        0.6
- 5   10001725 31205490      NA       NA         98       NA  
- 6   10001884 37510196     141       39.7       88        1.1
- 7   10002013 39060235     288       34.9      102        0.9
- 8   10002155 31090461     117       25.5       98        2.8
- 9   10002155 32358465     133       22.4       85        1.4
-10   10002155 33685454     138       39.7      105        1.1
-   `White Blood Cells` Potassium Bicarbonate Sodium
-                 &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;
- 1                 6.9       6.7          25    126
- 2                 5.3       3.9          21    144
- 3                 5.4       4.1          30    142
- 4                15.7       4.2          22    142
- 5                NA         4.1          NA    139
- 6                12.2       4.5          30    130
- 7                 7.2       3.5          24    137
- 8                17.9       4.9          23    135
- 9                 9.8       5.7          26    120
-10                 7.9       4.6          24    139
+   subject_id  stay_id Glucose Hematocrit Bicarbonate Chloride Creatinine
+        &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+ 1   10000032 39553978     102       41.1          25       95        0.7
+ 2   10000980 39765666      89       27.3          21      109        2.3
+ 3   10001217 34592300      87       37.4          30      104        0.5
+ 4   10001217 37067082     112       38.1          22      108        0.6
+ 5   10001725 31205490      NA       NA            NA       98       NA  
+ 6   10001884 37510196     141       39.7          30       88        1.1
+ 7   10002013 39060235     288       34.9          24      102        0.9
+ 8   10002155 31090461     117       25.5          23       98        2.8
+ 9   10002155 32358465     133       22.4          26       85        1.4
+10   10002155 33685454     138       39.7          24      105        1.1
+   `White Blood Cells` Sodium Potassium
+                 &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1                 6.9    126       6.7
+ 2                 5.3    144       3.9
+ 3                 5.4    142       4.1
+ 4                15.7    142       4.2
+ 5                NA      139       4.1
+ 6                12.2    130       4.5
+ 7                 7.2    137       3.5
+ 8                17.9    135       4.9
+ 9                 9.8    120       5.7
+10                 7.9    139       4.6
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -3407,42 +3407,42 @@ ORDER BY is ignored in subqueries without LIMIT
 <pre><code># Source:     SQL [?? x 7]
 # Database:   BigQueryConnection
 # Ordered by: subject_id, stay_id
-   subject_id  stay_id `Heart Rate` `Non Invasive Blood Pressure systolic`
-        &lt;int&gt;    &lt;int&gt;        &lt;dbl&gt;                                  &lt;dbl&gt;
- 1   10000032 39553978           91                                     84
- 2   10000980 39765666           77                                    150
- 3   10001217 34592300           96                                    167
- 4   10001217 37067082           86                                    151
- 5   10001725 31205490           55                                     73
- 6   10001884 37510196           38                                    180
- 7   10002013 39060235           80                                    104
- 8   10002155 31090461           94                                    118
- 9   10002155 32358465           98                                    109
-10   10002155 33685454           68                                    126
-   `Non Invasive Blood Pressure diastolic` `Respiratory Rate`
-                                     &lt;dbl&gt;              &lt;dbl&gt;
- 1                                      48                 24
- 2                                      77                 23
- 3                                      95                 11
- 4                                      90                 18
- 5                                      56                 19
- 6                                      12                 16
- 7                                      70                 14
- 8                                      51                 18
- 9                                      65                 23
-10                                      61                 18
-   `Temperature Fahrenheit`
-                      &lt;dbl&gt;
- 1                     98.7
- 2                     98  
- 3                     97.6
- 4                     98.5
- 5                     97.7
- 6                     98.1
- 7                     97.2
- 8                     96.9
- 9                     97.7
-10                     95.9
+   subject_id  stay_id `Respiratory Rate`
+        &lt;int&gt;    &lt;int&gt;              &lt;dbl&gt;
+ 1   10000032 39553978                 24
+ 2   10000980 39765666                 23
+ 3   10001217 34592300                 11
+ 4   10001217 37067082                 18
+ 5   10001725 31205490                 19
+ 6   10001884 37510196                 16
+ 7   10002013 39060235                 14
+ 8   10002155 31090461                 18
+ 9   10002155 32358465                 23
+10   10002155 33685454                 18
+   `Non Invasive Blood Pressure diastolic` `Heart Rate`
+                                     &lt;dbl&gt;        &lt;dbl&gt;
+ 1                                      48           91
+ 2                                      77           77
+ 3                                      95           96
+ 4                                      90           86
+ 5                                      56           55
+ 6                                      12           38
+ 7                                      70           80
+ 8                                      51           94
+ 9                                      65           98
+10                                      61           68
+   `Non Invasive Blood Pressure systolic` `Temperature Fahrenheit`
+                                    &lt;dbl&gt;                    &lt;dbl&gt;
+ 1                                     84                     98.7
+ 2                                    150                     98  
+ 3                                    167                     97.6
+ 4                                    151                     98.5
+ 5                                     73                     97.7
+ 6                                    180                     98.1
+ 7                                    104                     97.2
+ 8                                    118                     96.9
+ 9                                    109                     97.7
+10                                    126                     95.9
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -3556,66 +3556,54 @@ ORDER BY is ignored in subqueries without LIMIT
  8                    1 F              80        2128 2008 - 2010      
  9                    0 F              80        2128 2008 - 2010      
 10                    0 F              80        2128 2008 - 2010      
-   dod        age_intime Glucose Hematocrit Chloride Creatinine
-   &lt;date&gt;          &lt;int&gt;   &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
- 1 2180-09-09         52     102       41.1       95        0.7
- 2 2193-08-26         76      89       27.3      109        2.3
- 3 NA                 55     112       38.1      108        0.6
- 4 NA                 55      87       37.4      104        0.5
- 5 NA                 46      NA       NA         98       NA  
- 6 2131-01-20         77     141       39.7       88        1.1
- 7 NA                 57     288       34.9      102        0.9
- 8 2131-03-10         83     133       22.4       85        1.4
- 9 2131-03-10         81     138       39.7      105        1.1
-10 2131-03-10         82     117       25.5       98        2.8
-   `White Blood Cells` Potassium Bicarbonate Sodium `Heart Rate`
-                 &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
- 1                 6.9       6.7          25    126           91
- 2                 5.3       3.9          21    144           77
- 3                15.7       4.2          22    142           86
- 4                 5.4       4.1          30    142           96
- 5                NA         4.1          NA    139           55
- 6                12.2       4.5          30    130           38
- 7                 7.2       3.5          24    137           80
- 8                 9.8       5.7          26    120           98
- 9                 7.9       4.6          24    139           68
-10                17.9       4.9          23    135           94
-   `Non Invasive Blood Pressure systolic`
-                                    &lt;dbl&gt;
- 1                                     84
- 2                                    150
- 3                                    151
- 4                                    167
- 5                                     73
- 6                                    180
- 7                                    104
- 8                                    109
- 9                                    126
-10                                    118
-   `Non Invasive Blood Pressure diastolic` `Respiratory Rate`
-                                     &lt;dbl&gt;              &lt;dbl&gt;
- 1                                      48                 24
- 2                                      77                 23
- 3                                      90                 18
- 4                                      95                 11
- 5                                      56                 19
- 6                                      12                 16
- 7                                      70                 14
- 8                                      65                 23
- 9                                      61                 18
-10                                      51                 18
-   `Temperature Fahrenheit`
-                      &lt;dbl&gt;
- 1                     98.7
- 2                     98  
- 3                     98.5
- 4                     97.6
- 5                     97.7
- 6                     98.1
- 7                     97.2
- 8                     97.7
- 9                     95.9
-10                     96.9
+   dod        age_intime Glucose Hematocrit Bicarbonate Chloride Creatinine
+   &lt;date&gt;          &lt;int&gt;   &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+ 1 2180-09-09         52     102       41.1          25       95        0.7
+ 2 2193-08-26         76      89       27.3          21      109        2.3
+ 3 NA                 55     112       38.1          22      108        0.6
+ 4 NA                 55      87       37.4          30      104        0.5
+ 5 NA                 46      NA       NA            NA       98       NA  
+ 6 2131-01-20         77     141       39.7          30       88        1.1
+ 7 NA                 57     288       34.9          24      102        0.9
+ 8 2131-03-10         83     133       22.4          26       85        1.4
+ 9 2131-03-10         81     138       39.7          24      105        1.1
+10 2131-03-10         82     117       25.5          23       98        2.8
+   `White Blood Cells` Sodium Potassium `Respiratory Rate`
+                 &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
+ 1                 6.9    126       6.7                 24
+ 2                 5.3    144       3.9                 23
+ 3                15.7    142       4.2                 18
+ 4                 5.4    142       4.1                 11
+ 5                NA      139       4.1                 19
+ 6                12.2    130       4.5                 16
+ 7                 7.2    137       3.5                 14
+ 8                 9.8    120       5.7                 23
+ 9                 7.9    139       4.6                 18
+10                17.9    135       4.9                 18
+   `Non Invasive Blood Pressure diastolic` `Heart Rate`
+                                     &lt;dbl&gt;        &lt;dbl&gt;
+ 1                                      48           91
+ 2                                      77           77
+ 3                                      90           86
+ 4                                      95           96
+ 5                                      56           55
+ 6                                      12           38
+ 7                                      70           80
+ 8                                      65           98
+ 9                                      61           68
+10                                      51           94
+   `Non Invasive Blood Pressure systolic` `Temperature Fahrenheit`
+                                    &lt;dbl&gt;                    &lt;dbl&gt;
+ 1                                     84                     98.7
+ 2                                    150                     98  
+ 3                                    151                     98.5
+ 4                                    167                     97.6
+ 5                                     73                     97.7
+ 6                                    180                     98.1
+ 7                                    104                     97.2
+ 8                                    109                     97.7
+ 9                                    126                     95.9
+10                                    118                     96.9
 # ℹ 73,171 more rows</code></pre>
 </div>
 </div>
@@ -3624,768 +3612,722 @@ ORDER BY is ignored in subqueries without LIMIT
 <h3 class="anchored" data-anchor-id="q1.8-preprocessing">Q1.8 Preprocessing</h3>
 <p>Perform the following preprocessing steps. (i) Lump infrequent levels into “Other” level for <code>first_careunit</code>, <code>last_careunit</code>, <code>admission_type</code>, <code>admission_location</code>, and <code>discharge_location</code>. (ii) Collapse the levels of <code>race</code> into <code>ASIAN</code>, <code>BLACK</code>, <code>HISPANIC</code>, <code>WHITE</code>, and <code>Other</code>. (iii) Create a new variable <code>los_long</code> that is <code>TRUE</code> when <code>los</code> is greater than or equal to 2 days. (iv) Summarize the data using <code>tbl_summary()</code>, stratified by <code>los_long</code>. Hint: <code>fct_lump</code> and <code>fct_collapse</code> from the <code>forcats</code> package can be useful.</p>
 <p>Hint: Below is a numerical summary of my tibble after preprocessing:</p>
-<iframe width="95%" height="500" src="./mimic_icu_cohort_gtsummary.html">
-</iframe>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="ot">&lt;-</span> mimic_icu_cohort <span class="sc">|&gt;</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_careunit =</span> <span class="fu">fct_lump</span>(first_careunit, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>),</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_careunit =</span> <span class="fu">fct_lump</span>(last_careunit, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>),</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">admission_type =</span> <span class="fu">fct_lump</span>(admission_type, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">admission_location =</span> <span class="fu">fct_lump</span>(admission_location, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>),</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">discharge_location =</span> <span class="fu">fct_lump</span>(discharge_location, <span class="at">n =</span> <span class="dv">4</span>, <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort<span class="sc">$</span>race <span class="ot">&lt;-</span> </span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_collapse</span>(mimic_icu_cohort<span class="sc">$</span>race,</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">ASIAN =</span> <span class="fu">c</span>(<span class="st">&quot;ASIAN&quot;</span>, <span class="st">&quot;ASIAN - ASIAN INDIAN&quot;</span>, <span class="st">&quot;ASIAN - CHINESE&quot;</span>, </span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;ASIAN - KOREAN&quot;</span>,<span class="st">&quot;ASIAN - SOUTH EAST ASIAN&quot;</span>),</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">BLACK =</span> <span class="fu">c</span>(<span class="st">&quot;BLACK/AFRICAN&quot;</span>, <span class="st">&quot;BLACK/AFRICAN AMERICAN&quot;</span>, <span class="st">&quot;BLACK/CAPE VERDEAN&quot;</span>, </span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;BLACK/CARIBBEAN ISLAND&quot;</span>),</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">HISPANIC =</span> <span class="fu">c</span>(<span class="st">&quot;HISPANIC OR LATINO&quot;</span>, <span class="st">&quot;HISPANIC/LATINO - CENTRAL AMERICAN&quot;</span>,</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - COLUMBIAN&quot;</span>, <span class="st">&quot;HISPANIC/LATINO - CUBAN&quot;</span>,</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - DOMINICAN&quot;</span>, <span class="st">&quot;HISPANIC/LATINO - GUATEMALAN&quot;</span>,</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - HONDURAN&quot;</span>, <span class="st">&quot;HISPANIC/LATINO - MEXICAN&quot;</span>, </span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - PUERTO RICAN&quot;</span>, <span class="st">&quot;HISPANIC/LATINO - SALVADORAN&quot;</span>),</span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">WHITE =</span> <span class="fu">c</span>(<span class="st">&quot;WHITE&quot;</span>, <span class="st">&quot;WHITE - BRAZILIAN&quot;</span>, <span class="st">&quot;WHITE - EASTERN EUROPEAN&quot;</span>, </span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;WHITE - OTHER EUROPEAN&quot;</span>, <span class="st">&quot;WHITE - RUSSIAN&quot;</span>),</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">Other =</span> <span class="fu">c</span>(<span class="st">&quot;AMERICAN INDIAN/ALASKA NATIVE&quot;</span>,<span class="st">&quot;MULTIPLE RACE/ETHNICITY&quot;</span>,</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER&quot;</span>, <span class="st">&quot;OTHER&quot;</span>,</span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;PATIENT DECLINED TO ANSWER&quot;</span>, <span class="st">&quot;PORTUGUESE&quot;</span>,</span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;SOUTH AMERICAN&quot;</span>, <span class="st">&quot;UNABLE TO OBTAIN&quot;</span>, <span class="st">&quot;UNKNOWN&quot;</span>)</span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="ot">&lt;-</span> mimic_icu_cohort <span class="sc">|&gt;</span> </span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">los_long =</span> los <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
-<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> mimic_icu_cohort <span class="sc">|&gt;</span></span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(first_careunit, last_careunit, los, admission_type,</span>
-<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>         admission_location, discharge_location, insurance, language,</span>
-<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>         marital_status, race, hospital_expire_flag, gender,</span>
-<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>         dod, Sodium, Chloride, Creatinine, Potassium,</span>
-<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>         Glucose, Hematocrit, <span class="st">`</span><span class="at">White Blood Cells</span><span class="st">`</span>, Bicarbonate, </span>
-<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Temperature Fahrenheit</span><span class="st">`</span>, <span class="st">`</span><span class="at">Non Invasive Blood Pressure diastolic</span><span class="st">`</span>,</span>
-<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Respiratory Rate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Non Invasive Blood Pressure systolic</span><span class="st">`</span>, <span class="st">`</span><span class="at">Heart Rate</span><span class="st">`</span>,</span>
-<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>         age_intime, los_long) <span class="sc">|&gt;</span></span>
-<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">by =</span> los_long) <span class="sc">|&gt;</span></span>
-<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">width =</span> <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`...` must be empty.
-✖ Problematic argument:
-• width = Inf</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;div id=&quot;guctyxeill&quot; style=&quot;padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&quot;&gt;
-  &lt;style&gt;#guctyxeill table {
-  font-family: system-ui, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;, &#39;Noto Color Emoji&#39;;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">admission_location =</span> <span class="fu">fct_lump</span>(admission_location, <span class="at">n =</span> <span class="dv">4</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">discharge_location =</span> <span class="fu">fct_lump</span>(discharge_location, <span class="at">n =</span> <span class="dv">4</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">other_level =</span> <span class="st">&quot;Other&quot;</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort<span class="sc">$</span>race <span class="ot">&lt;-</span> </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_collapse</span>(mimic_icu_cohort<span class="sc">$</span>race,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">ASIAN =</span> <span class="fu">c</span>(<span class="st">&quot;ASIAN&quot;</span>, <span class="st">&quot;ASIAN - ASIAN INDIAN&quot;</span>, <span class="st">&quot;ASIAN - CHINESE&quot;</span>, </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;ASIAN - KOREAN&quot;</span>,<span class="st">&quot;ASIAN - SOUTH EAST ASIAN&quot;</span>),</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">BLACK =</span> <span class="fu">c</span>(<span class="st">&quot;BLACK/AFRICAN&quot;</span>, <span class="st">&quot;BLACK/AFRICAN AMERICAN&quot;</span>,</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;BLACK/CAPE VERDEAN&quot;</span>, </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;BLACK/CARIBBEAN ISLAND&quot;</span>),</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">HISPANIC =</span> <span class="fu">c</span>(<span class="st">&quot;HISPANIC OR LATINO&quot;</span>,</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - CENTRAL AMERICAN&quot;</span>,</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - COLUMBIAN&quot;</span>,</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - CUBAN&quot;</span>,</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - DOMINICAN&quot;</span>,</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - GUATEMALAN&quot;</span>,</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - HONDURAN&quot;</span>,</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - MEXICAN&quot;</span>, </span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - PUERTO RICAN&quot;</span>,</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;HISPANIC/LATINO - SALVADORAN&quot;</span>),</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>               <span class="at">WHITE =</span> <span class="fu">c</span>(<span class="st">&quot;WHITE&quot;</span>, <span class="st">&quot;WHITE - BRAZILIAN&quot;</span>,</span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;WHITE - EASTERN EUROPEAN&quot;</span>, </span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;WHITE - OTHER EUROPEAN&quot;</span>, <span class="st">&quot;WHITE - RUSSIAN&quot;</span>),</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">Other =</span> <span class="fu">c</span>(<span class="st">&quot;AMERICAN INDIAN/ALASKA NATIVE&quot;</span>,</span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;MULTIPLE RACE/ETHNICITY&quot;</span>,</span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER&quot;</span>, <span class="st">&quot;OTHER&quot;</span>,</span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;PATIENT DECLINED TO ANSWER&quot;</span>, <span class="st">&quot;PORTUGUESE&quot;</span>,</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;SOUTH AMERICAN&quot;</span>, <span class="st">&quot;UNABLE TO OBTAIN&quot;</span>, <span class="st">&quot;UNKNOWN&quot;</span>)</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="ot">&lt;-</span> mimic_icu_cohort <span class="sc">|&gt;</span> </span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">los_long =</span> los <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> mimic_icu_cohort <span class="sc">|&gt;</span></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(first_careunit, last_careunit, los, admission_type,</span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a>         admission_location, discharge_location, insurance, language,</span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a>         marital_status, race, hospital_expire_flag, gender,</span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a>         dod, Sodium, Chloride, Creatinine, Potassium,</span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>         Glucose, Hematocrit, <span class="st">`</span><span class="at">White Blood Cells</span><span class="st">`</span>, Bicarbonate, </span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Temperature Fahrenheit</span><span class="st">`</span>, <span class="st">`</span><span class="at">Non Invasive Blood Pressure diastolic</span><span class="st">`</span>,</span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Respiratory Rate</span><span class="st">`</span>, <span class="st">`</span><span class="at">Non Invasive Blood Pressure systolic</span><span class="st">`</span>,</span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Heart Rate</span><span class="st">`</span>, age_intime, los_long) <span class="sc">|&gt;</span></span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">by =</span> los_long)</span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>summary_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-#guctyxeill thead, #guctyxeill tbody, #guctyxeill tfoot, #guctyxeill tr, #guctyxeill td, #guctyxeill th {
-  border-style: none;
+<div id="txtzciabgq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#txtzciabgq table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
 }
-
-#guctyxeill p {
-  margin: 0;
-  padding: 0;
+#txtzciabgq thead, #txtzciabgq tbody, #txtzciabgq tfoot, #txtzciabgq tr, #txtzciabgq td, #txtzciabgq th {
+border-style: none;
 }
-
-#guctyxeill .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
+#txtzciabgq p {
+margin: 0;
+padding: 0;
 }
-
-#guctyxeill .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
+#txtzciabgq .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
 }
-
-#guctyxeill .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
+#txtzciabgq .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
 }
-
-#guctyxeill .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
+#txtzciabgq .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
 }
-
-#guctyxeill .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#txtzciabgq .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
 }
-
-#guctyxeill .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
+#txtzciabgq .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
 }
-
-#guctyxeill .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#txtzciabgq .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
 }
-
-#guctyxeill .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
+#txtzciabgq .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
 }
-
-#guctyxeill .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
+#txtzciabgq .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
 }
-
-#guctyxeill .gt_column_spanner_outer:first-child {
-  padding-left: 0;
+#txtzciabgq .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
 }
-
-#guctyxeill .gt_column_spanner_outer:last-child {
-  padding-right: 0;
+#txtzciabgq .gt_column_spanner_outer:first-child {
+padding-left: 0;
 }
-
-#guctyxeill .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
+#txtzciabgq .gt_column_spanner_outer:last-child {
+padding-right: 0;
 }
-
-#guctyxeill .gt_spanner_row {
-  border-bottom-style: hidden;
+#txtzciabgq .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
 }
-
-#guctyxeill .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
+#txtzciabgq .gt_spanner_row {
+border-bottom-style: hidden;
 }
-
-#guctyxeill .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
+#txtzciabgq .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
 }
-
-#guctyxeill .gt_from_md &gt; :first-child {
-  margin-top: 0;
+#txtzciabgq .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
 }
-
-#guctyxeill .gt_from_md &gt; :last-child {
-  margin-bottom: 0;
+#txtzciabgq .gt_from_md > :first-child {
+margin-top: 0;
 }
-
-#guctyxeill .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
+#txtzciabgq .gt_from_md > :last-child {
+margin-bottom: 0;
 }
-
-#guctyxeill .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
+#txtzciabgq .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
 }
-
-#guctyxeill .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
+#txtzciabgq .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
 }
-
-#guctyxeill .gt_row_group_first td {
-  border-top-width: 2px;
+#txtzciabgq .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
 }
-
-#guctyxeill .gt_row_group_first th {
-  border-top-width: 2px;
+#txtzciabgq .gt_row_group_first td {
+border-top-width: 2px;
 }
-
-#guctyxeill .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
+#txtzciabgq .gt_row_group_first th {
+border-top-width: 2px;
 }
-
-#guctyxeill .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
+#txtzciabgq .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
 }
-
-#guctyxeill .gt_first_summary_row.thick {
-  border-top-width: 2px;
+#txtzciabgq .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
 }
-
-#guctyxeill .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
+#txtzciabgq .gt_first_summary_row.thick {
+border-top-width: 2px;
 }
-
-#guctyxeill .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
+#txtzciabgq .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
 }
-
-#guctyxeill .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
+#txtzciabgq .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
 }
-
-#guctyxeill .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
+#txtzciabgq .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
 }
-
-#guctyxeill .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
+#txtzciabgq .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
 }
-
-#guctyxeill .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
+#txtzciabgq .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
 }
-
-#guctyxeill .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
+#txtzciabgq .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
 }
-
-#guctyxeill .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
+#txtzciabgq .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
 }
-
-#guctyxeill .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
+#txtzciabgq .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
 }
-
-#guctyxeill .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
+#txtzciabgq .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
 }
-
-#guctyxeill .gt_left {
-  text-align: left;
+#txtzciabgq .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
 }
-
-#guctyxeill .gt_center {
-  text-align: center;
+#txtzciabgq .gt_left {
+text-align: left;
 }
-
-#guctyxeill .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+#txtzciabgq .gt_center {
+text-align: center;
 }
-
-#guctyxeill .gt_font_normal {
-  font-weight: normal;
+#txtzciabgq .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
 }
-
-#guctyxeill .gt_font_bold {
-  font-weight: bold;
+#txtzciabgq .gt_font_normal {
+font-weight: normal;
 }
-
-#guctyxeill .gt_font_italic {
-  font-style: italic;
+#txtzciabgq .gt_font_bold {
+font-weight: bold;
 }
-
-#guctyxeill .gt_super {
-  font-size: 65%;
+#txtzciabgq .gt_font_italic {
+font-style: italic;
 }
-
-#guctyxeill .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
+#txtzciabgq .gt_super {
+font-size: 65%;
 }
-
-#guctyxeill .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
+#txtzciabgq .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
 }
-
-#guctyxeill .gt_indent_1 {
-  text-indent: 5px;
+#txtzciabgq .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
 }
-
-#guctyxeill .gt_indent_2 {
-  text-indent: 10px;
+#txtzciabgq .gt_indent_1 {
+text-indent: 5px;
 }
-
-#guctyxeill .gt_indent_3 {
-  text-indent: 15px;
+#txtzciabgq .gt_indent_2 {
+text-indent: 10px;
 }
-
-#guctyxeill .gt_indent_4 {
-  text-indent: 20px;
+#txtzciabgq .gt_indent_3 {
+text-indent: 15px;
 }
-
-#guctyxeill .gt_indent_5 {
-  text-indent: 25px;
+#txtzciabgq .gt_indent_4 {
+text-indent: 20px;
 }
-&lt;/style&gt;
-  &lt;table class=&quot;gt_table&quot; data-quarto-disable-processing=&quot;false&quot; data-quarto-bootstrap=&quot;false&quot;&gt;
-  &lt;thead&gt;
+#txtzciabgq .gt_indent_5 {
+text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
     
-    &lt;tr class=&quot;gt_col_headings&quot;&gt;
-      &lt;th class=&quot;gt_col_heading gt_columns_bottom_border gt_left&quot; rowspan=&quot;1&quot; colspan=&quot;1&quot; scope=&quot;col&quot; id=&quot;&amp;lt;strong&amp;gt;Characteristic&amp;lt;/strong&amp;gt;&quot;&gt;&lt;strong&gt;Characteristic&lt;/strong&gt;&lt;/th&gt;
-      &lt;th class=&quot;gt_col_heading gt_columns_bottom_border gt_center&quot; rowspan=&quot;1&quot; colspan=&quot;1&quot; scope=&quot;col&quot; id=&quot;&amp;lt;strong&amp;gt;FALSE&amp;lt;/strong&amp;gt;, N = 38,050&amp;lt;span class=&amp;quot;gt_footnote_marks&amp;quot; style=&amp;quot;white-space:nowrap;font-style:italic;font-weight:normal;&amp;quot;&amp;gt;&amp;lt;sup&amp;gt;1&amp;lt;/sup&amp;gt;&amp;lt;/span&amp;gt;&quot;&gt;&lt;strong&gt;FALSE&lt;/strong&gt;, N = 38,050&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
-      &lt;th class=&quot;gt_col_heading gt_columns_bottom_border gt_center&quot; rowspan=&quot;1&quot; colspan=&quot;1&quot; scope=&quot;col&quot; id=&quot;&amp;lt;strong&amp;gt;TRUE&amp;lt;/strong&amp;gt;, N = 35,131&amp;lt;span class=&amp;quot;gt_footnote_marks&amp;quot; style=&amp;quot;white-space:nowrap;font-style:italic;font-weight:normal;&amp;quot;&amp;gt;&amp;lt;sup&amp;gt;1&amp;lt;/sup&amp;gt;&amp;lt;/span&amp;gt;&quot;&gt;&lt;strong&gt;TRUE&lt;/strong&gt;, N = 35,131&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody class=&quot;gt_table_body&quot;&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;first_careunit&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Cardiac Vascular Intensive Care Unit (CVICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,827 (15%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,755 (16%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medical Intensive Care Unit (MICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;8,782 (23%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;7,116 (20%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medical/Surgical Intensive Care Unit (MICU/SICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;7,147 (19%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,586 (16%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Surgical Intensive Care Unit (SICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,654 (15%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,507 (16%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;10,640 (28%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;11,167 (32%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;last_careunit&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Cardiac Vascular Intensive Care Unit (CVICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,773 (15%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,614 (16%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medical Intensive Care Unit (MICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;8,929 (23%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;7,903 (22%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medical/Surgical Intensive Care Unit (MICU/SICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;7,051 (19%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,303 (15%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Surgical Intensive Care Unit (SICU)&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,665 (15%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,344 (15%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;10,632 (28%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;10,967 (31%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;los&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1.1 (0.8, 1.5)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;3.8 (2.7, 6.6)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;admission_type&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    EW EMER.&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;20,735 (54%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;17,937 (51%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    OBSERVATION ADMIT&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,329 (11%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,645 (13%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    SURGICAL SAME DAY ADMISSION&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,340 (11%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;3,033 (8.6%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    URGENT&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,494 (14%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;6,959 (20%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;3,152 (8.3%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,557 (7.3%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;admission_location&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    EMERGENCY ROOM&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;19,602 (52%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;16,279 (46%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    PHYSICIAN REFERRAL&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;8,986 (24%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;7,412 (21%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    TRANSFER FROM HOSPITAL&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;6,839 (18%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;8,959 (26%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    WALK-IN/SELF REFERRAL&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;876 (2.3%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;791 (2.3%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1,747 (4.6%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;1,690 (4.8%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;discharge_location&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    DIED&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;3,298 (8.8%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,006 (14%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    HOME&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;12,192 (33%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,255 (15%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    HOME HEALTH CARE&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;10,347 (28%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;7,762 (22%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    SKILLED NURSING FACILITY&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;6,239 (17%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;7,158 (20%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,402 (14%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;9,885 (28%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;572&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;65&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;insurance&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medicaid&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;3,060 (8.0%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,468 (7.0%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Medicare&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;16,489 (43%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;16,602 (47%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;18,501 (49%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;16,061 (46%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;language&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    ?&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;3,692 (9.7%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;3,751 (11%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    ENGLISH&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;34,358 (90%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;31,380 (89%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;marital_status&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    DIVORCED&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2,843 (8.0%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,561 (7.9%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    MARRIED&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;16,984 (48%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;15,784 (49%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    SINGLE&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;11,175 (31%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;9,683 (30%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    WIDOWED&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,699 (13%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,339 (13%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2,349&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,764&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;race&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Other&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;5,160 (14%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;5,596 (16%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    ASIAN&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1,148 (3.0%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;1,007 (2.9%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    BLACK&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,311 (11%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;3,649 (10%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    HISPANIC&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1,492 (3.9%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;1,249 (3.6%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    WHITE&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;25,939 (68%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;23,630 (67%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;hospital_expire_flag&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;3,357 (8.8%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,972 (14%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;gender&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;&lt;br /&gt;&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    F&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;17,014 (45%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;15,349 (44%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    M&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;21,036 (55%)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;19,782 (56%)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;dod&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2110-02-08 to 2210-12-04&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2110-01-25 to 2211-01-17&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;24,904&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;20,003&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Sodium&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;139.0 (136.0, 141.0)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;138.0 (135.0, 141.0)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,174&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,698&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Chloride&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;102 (98, 105)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;102 (98, 105)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,175&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,708&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Creatinine&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1.00 (0.80, 1.40)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;1.00 (0.80, 1.60)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2,599&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;3,171&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Potassium&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4.20 (3.80, 4.60)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4.20 (3.80, 4.70)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,189&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,712&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Glucose&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;118 (98, 153)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;122 (100, 159)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,282&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,817&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Hematocrit&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;36 (30, 40)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;35 (29, 40)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2,236&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,781&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;White Blood Cells&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;9.0 (6.6, 12.6)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;9.7 (7.0, 13.8)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;2,272&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;2,822&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Bicarbonate&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;25.0 (22.0, 27.0)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;24.0 (21.0, 27.0)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;4,270&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;4,780&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Temperature Fahrenheit&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;98.10 (97.60, 98.60)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;98.20 (97.60, 98.80)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;1,079&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;170&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Non Invasive Blood Pressure diastolic&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;68 (58, 80)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;66 (56, 79)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;709&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;244&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Respiratory Rate&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;18.0 (15.0, 22.0)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;19.0 (15.0, 23.0)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;81&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;10&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Non Invasive Blood Pressure systolic&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;123 (108, 140)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;120 (104, 138)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;709&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;241&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;Heart Rate&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;85 (74, 99)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;88 (76, 103)&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;    Unknown&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;17&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td headers=&quot;label&quot; class=&quot;gt_row gt_left&quot;&gt;age_intime&lt;/td&gt;
-&lt;td headers=&quot;stat_1&quot; class=&quot;gt_row gt_center&quot;&gt;65 (53, 77)&lt;/td&gt;
-&lt;td headers=&quot;stat_2&quot; class=&quot;gt_row gt_center&quot;&gt;67 (56, 78)&lt;/td&gt;&lt;/tr&gt;
-  &lt;/tbody&gt;
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Characteristic&lt;/strong&gt;"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;FALSE&lt;/strong&gt;, N = 38,050&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;"><strong>FALSE</strong>, N = 38,050<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;TRUE&lt;/strong&gt;, N = 35,131&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;"><strong>TRUE</strong>, N = 35,131<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">first_careunit</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Cardiac Vascular Intensive Care Unit (CVICU)</td>
+<td headers="stat_1" class="gt_row gt_center">5,827 (15%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,755 (16%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medical Intensive Care Unit (MICU)</td>
+<td headers="stat_1" class="gt_row gt_center">8,782 (23%)</td>
+<td headers="stat_2" class="gt_row gt_center">7,116 (20%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medical/Surgical Intensive Care Unit (MICU/SICU)</td>
+<td headers="stat_1" class="gt_row gt_center">7,147 (19%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,586 (16%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Surgical Intensive Care Unit (SICU)</td>
+<td headers="stat_1" class="gt_row gt_center">5,654 (15%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,507 (16%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">10,640 (28%)</td>
+<td headers="stat_2" class="gt_row gt_center">11,167 (32%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">last_careunit</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Cardiac Vascular Intensive Care Unit (CVICU)</td>
+<td headers="stat_1" class="gt_row gt_center">5,773 (15%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,614 (16%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medical Intensive Care Unit (MICU)</td>
+<td headers="stat_1" class="gt_row gt_center">8,929 (23%)</td>
+<td headers="stat_2" class="gt_row gt_center">7,903 (22%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medical/Surgical Intensive Care Unit (MICU/SICU)</td>
+<td headers="stat_1" class="gt_row gt_center">7,051 (19%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,303 (15%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Surgical Intensive Care Unit (SICU)</td>
+<td headers="stat_1" class="gt_row gt_center">5,665 (15%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,344 (15%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">10,632 (28%)</td>
+<td headers="stat_2" class="gt_row gt_center">10,967 (31%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">los</td>
+<td headers="stat_1" class="gt_row gt_center">1.1 (0.8, 1.5)</td>
+<td headers="stat_2" class="gt_row gt_center">3.8 (2.7, 6.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">admission_type</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    EW EMER.</td>
+<td headers="stat_1" class="gt_row gt_center">20,735 (54%)</td>
+<td headers="stat_2" class="gt_row gt_center">17,937 (51%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    OBSERVATION ADMIT</td>
+<td headers="stat_1" class="gt_row gt_center">4,329 (11%)</td>
+<td headers="stat_2" class="gt_row gt_center">4,645 (13%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    SURGICAL SAME DAY ADMISSION</td>
+<td headers="stat_1" class="gt_row gt_center">4,340 (11%)</td>
+<td headers="stat_2" class="gt_row gt_center">3,033 (8.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    URGENT</td>
+<td headers="stat_1" class="gt_row gt_center">5,494 (14%)</td>
+<td headers="stat_2" class="gt_row gt_center">6,959 (20%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">3,152 (8.3%)</td>
+<td headers="stat_2" class="gt_row gt_center">2,557 (7.3%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">admission_location</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    EMERGENCY ROOM</td>
+<td headers="stat_1" class="gt_row gt_center">19,602 (52%)</td>
+<td headers="stat_2" class="gt_row gt_center">16,279 (46%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    PHYSICIAN REFERRAL</td>
+<td headers="stat_1" class="gt_row gt_center">8,986 (24%)</td>
+<td headers="stat_2" class="gt_row gt_center">7,412 (21%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    TRANSFER FROM HOSPITAL</td>
+<td headers="stat_1" class="gt_row gt_center">6,839 (18%)</td>
+<td headers="stat_2" class="gt_row gt_center">8,959 (26%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    WALK-IN/SELF REFERRAL</td>
+<td headers="stat_1" class="gt_row gt_center">876 (2.3%)</td>
+<td headers="stat_2" class="gt_row gt_center">791 (2.3%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">1,747 (4.6%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,690 (4.8%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">discharge_location</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    DIED</td>
+<td headers="stat_1" class="gt_row gt_center">3,298 (8.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,006 (14%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    HOME</td>
+<td headers="stat_1" class="gt_row gt_center">12,192 (33%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,255 (15%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    HOME HEALTH CARE</td>
+<td headers="stat_1" class="gt_row gt_center">10,347 (28%)</td>
+<td headers="stat_2" class="gt_row gt_center">7,762 (22%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    SKILLED NURSING FACILITY</td>
+<td headers="stat_1" class="gt_row gt_center">6,239 (17%)</td>
+<td headers="stat_2" class="gt_row gt_center">7,158 (20%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">5,402 (14%)</td>
+<td headers="stat_2" class="gt_row gt_center">9,885 (28%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">572</td>
+<td headers="stat_2" class="gt_row gt_center">65</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">insurance</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medicaid</td>
+<td headers="stat_1" class="gt_row gt_center">3,060 (8.0%)</td>
+<td headers="stat_2" class="gt_row gt_center">2,468 (7.0%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Medicare</td>
+<td headers="stat_1" class="gt_row gt_center">16,489 (43%)</td>
+<td headers="stat_2" class="gt_row gt_center">16,602 (47%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">18,501 (49%)</td>
+<td headers="stat_2" class="gt_row gt_center">16,061 (46%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">language</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    ?</td>
+<td headers="stat_1" class="gt_row gt_center">3,692 (9.7%)</td>
+<td headers="stat_2" class="gt_row gt_center">3,751 (11%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    ENGLISH</td>
+<td headers="stat_1" class="gt_row gt_center">34,358 (90%)</td>
+<td headers="stat_2" class="gt_row gt_center">31,380 (89%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">marital_status</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    DIVORCED</td>
+<td headers="stat_1" class="gt_row gt_center">2,843 (8.0%)</td>
+<td headers="stat_2" class="gt_row gt_center">2,561 (7.9%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    MARRIED</td>
+<td headers="stat_1" class="gt_row gt_center">16,984 (48%)</td>
+<td headers="stat_2" class="gt_row gt_center">15,784 (49%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    SINGLE</td>
+<td headers="stat_1" class="gt_row gt_center">11,175 (31%)</td>
+<td headers="stat_2" class="gt_row gt_center">9,683 (30%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    WIDOWED</td>
+<td headers="stat_1" class="gt_row gt_center">4,699 (13%)</td>
+<td headers="stat_2" class="gt_row gt_center">4,339 (13%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">2,349</td>
+<td headers="stat_2" class="gt_row gt_center">2,764</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">race</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Other</td>
+<td headers="stat_1" class="gt_row gt_center">5,160 (14%)</td>
+<td headers="stat_2" class="gt_row gt_center">5,596 (16%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    ASIAN</td>
+<td headers="stat_1" class="gt_row gt_center">1,148 (3.0%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,007 (2.9%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    BLACK</td>
+<td headers="stat_1" class="gt_row gt_center">4,311 (11%)</td>
+<td headers="stat_2" class="gt_row gt_center">3,649 (10%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    HISPANIC</td>
+<td headers="stat_1" class="gt_row gt_center">1,492 (3.9%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,249 (3.6%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    WHITE</td>
+<td headers="stat_1" class="gt_row gt_center">25,939 (68%)</td>
+<td headers="stat_2" class="gt_row gt_center">23,630 (67%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">hospital_expire_flag</td>
+<td headers="stat_1" class="gt_row gt_center">3,357 (8.8%)</td>
+<td headers="stat_2" class="gt_row gt_center">4,972 (14%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">gender</td>
+<td headers="stat_1" class="gt_row gt_center"><br></td>
+<td headers="stat_2" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    F</td>
+<td headers="stat_1" class="gt_row gt_center">17,014 (45%)</td>
+<td headers="stat_2" class="gt_row gt_center">15,349 (44%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    M</td>
+<td headers="stat_1" class="gt_row gt_center">21,036 (55%)</td>
+<td headers="stat_2" class="gt_row gt_center">19,782 (56%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">dod</td>
+<td headers="stat_1" class="gt_row gt_center">2110-02-08 to 2210-12-04</td>
+<td headers="stat_2" class="gt_row gt_center">2110-01-25 to 2211-01-17</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">24,904</td>
+<td headers="stat_2" class="gt_row gt_center">20,003</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Sodium</td>
+<td headers="stat_1" class="gt_row gt_center">139.0 (136.0, 141.0)</td>
+<td headers="stat_2" class="gt_row gt_center">138.0 (135.0, 141.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">4,174</td>
+<td headers="stat_2" class="gt_row gt_center">4,698</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Chloride</td>
+<td headers="stat_1" class="gt_row gt_center">102 (98, 105)</td>
+<td headers="stat_2" class="gt_row gt_center">102 (98, 105)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">4,175</td>
+<td headers="stat_2" class="gt_row gt_center">4,708</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Creatinine</td>
+<td headers="stat_1" class="gt_row gt_center">1.00 (0.80, 1.40)</td>
+<td headers="stat_2" class="gt_row gt_center">1.00 (0.80, 1.60)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">2,599</td>
+<td headers="stat_2" class="gt_row gt_center">3,171</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Potassium</td>
+<td headers="stat_1" class="gt_row gt_center">4.20 (3.80, 4.60)</td>
+<td headers="stat_2" class="gt_row gt_center">4.20 (3.80, 4.70)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">4,189</td>
+<td headers="stat_2" class="gt_row gt_center">4,712</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Glucose</td>
+<td headers="stat_1" class="gt_row gt_center">118 (98, 153)</td>
+<td headers="stat_2" class="gt_row gt_center">122 (100, 159)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">4,282</td>
+<td headers="stat_2" class="gt_row gt_center">4,817</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Hematocrit</td>
+<td headers="stat_1" class="gt_row gt_center">36 (30, 40)</td>
+<td headers="stat_2" class="gt_row gt_center">35 (29, 40)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">2,236</td>
+<td headers="stat_2" class="gt_row gt_center">2,781</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">White Blood Cells</td>
+<td headers="stat_1" class="gt_row gt_center">9.0 (6.6, 12.6)</td>
+<td headers="stat_2" class="gt_row gt_center">9.7 (7.0, 13.8)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">2,272</td>
+<td headers="stat_2" class="gt_row gt_center">2,822</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Bicarbonate</td>
+<td headers="stat_1" class="gt_row gt_center">25.0 (22.0, 27.0)</td>
+<td headers="stat_2" class="gt_row gt_center">24.0 (21.0, 27.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">4,270</td>
+<td headers="stat_2" class="gt_row gt_center">4,780</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Temperature Fahrenheit</td>
+<td headers="stat_1" class="gt_row gt_center">98.10 (97.60, 98.60)</td>
+<td headers="stat_2" class="gt_row gt_center">98.20 (97.60, 98.80)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">1,079</td>
+<td headers="stat_2" class="gt_row gt_center">170</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Non Invasive Blood Pressure diastolic</td>
+<td headers="stat_1" class="gt_row gt_center">68 (58, 80)</td>
+<td headers="stat_2" class="gt_row gt_center">66 (56, 79)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">709</td>
+<td headers="stat_2" class="gt_row gt_center">244</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Respiratory Rate</td>
+<td headers="stat_1" class="gt_row gt_center">18.0 (15.0, 22.0)</td>
+<td headers="stat_2" class="gt_row gt_center">19.0 (15.0, 23.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">81</td>
+<td headers="stat_2" class="gt_row gt_center">10</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Non Invasive Blood Pressure systolic</td>
+<td headers="stat_1" class="gt_row gt_center">123 (108, 140)</td>
+<td headers="stat_2" class="gt_row gt_center">120 (104, 138)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">709</td>
+<td headers="stat_2" class="gt_row gt_center">241</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Heart Rate</td>
+<td headers="stat_1" class="gt_row gt_center">85 (74, 99)</td>
+<td headers="stat_2" class="gt_row gt_center">88 (76, 103)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">17</td>
+<td headers="stat_2" class="gt_row gt_center">1</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">age_intime</td>
+<td headers="stat_1" class="gt_row gt_center">65 (53, 77)</td>
+<td headers="stat_2" class="gt_row gt_center">67 (56, 78)</td></tr>
+  </tbody>
   
-  &lt;tfoot class=&quot;gt_footnotes&quot;&gt;
-    &lt;tr&gt;
-      &lt;td class=&quot;gt_footnote&quot; colspan=&quot;3&quot;&gt;&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt; n (%); Median (IQR); Range&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tfoot&gt;
-&lt;/table&gt;
-&lt;/div&gt;</code></pre>
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%); Median (IQR); Range</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
 </div>
 </div>
 </section>
@@ -4393,20 +4335,20 @@ ORDER BY is ignored in subqueries without LIMIT
 <h3 class="anchored" data-anchor-id="q1.9-save-the-final-tibble">Q1.9 Save the final tibble</h3>
 <p>Save the final tibble to an R data file <code>mimic_icu_cohort.rds</code> in the <code>mimiciv_shiny</code> folder.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="sc">|&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(<span class="st">&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;</span>, <span class="at">compress =</span> <span class="st">&quot;gz&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a directory mimiciv_shiny</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)) {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">&quot;mimiciv_shiny&quot;</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># save the final tibble</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>mimic_icu_cohort <span class="sc">|&gt;</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(<span class="st">&quot;mimiciv_shiny/mimic_icu_cohort.rds&quot;</span>, <span class="at">compress =</span> <span class="st">&quot;gz&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Close database connection and clear workspace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">&quot;con_bq&quot;</span>)) {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con_bq)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Although it is not a good practice to add big data files to git, for grading purpose, please add <code>mimic_icu_cohort.rds</code> to your git repository.</p>
 </section>

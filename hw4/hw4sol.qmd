@@ -162,32 +162,40 @@ Perform the following preprocessing steps. (i) Lump infrequent levels into "Othe
 
 Hint: Below is a numerical summary of my tibble after preprocessing:
 
-<iframe width=95% height="500" src="./mimic_icu_cohort_gtsummary.html"></iframe>
-
 ```{r}
 mimic_icu_cohort <- mimic_icu_cohort |>
   mutate(
     first_careunit = fct_lump(first_careunit, n = 4, other_level = "Other"),
     last_careunit = fct_lump(last_careunit, n = 4, other_level = "Other"),
     admission_type = fct_lump(admission_type, n = 4, other_level = "Other"),
-    admission_location = fct_lump(admission_location, n = 4, other_level = "Other"),
-    discharge_location = fct_lump(discharge_location, n = 4, other_level = "Other")
+    admission_location = fct_lump(admission_location, n = 4,
+                                  other_level = "Other"),
+    discharge_location = fct_lump(discharge_location, n = 4,
+                                  other_level = "Other")
     )
 
 mimic_icu_cohort$race <- 
   fct_collapse(mimic_icu_cohort$race,
                ASIAN = c("ASIAN", "ASIAN - ASIAN INDIAN", "ASIAN - CHINESE", 
                          "ASIAN - KOREAN","ASIAN - SOUTH EAST ASIAN"),
-               BLACK = c("BLACK/AFRICAN", "BLACK/AFRICAN AMERICAN", "BLACK/CAPE VERDEAN", 
+               BLACK = c("BLACK/AFRICAN", "BLACK/AFRICAN AMERICAN",
+                         "BLACK/CAPE VERDEAN", 
                          "BLACK/CARIBBEAN ISLAND"),
-               HISPANIC = c("HISPANIC OR LATINO", "HISPANIC/LATINO - CENTRAL AMERICAN",
-                            "HISPANIC/LATINO - COLUMBIAN", "HISPANIC/LATINO - CUBAN",
-                            "HISPANIC/LATINO - DOMINICAN", "HISPANIC/LATINO - GUATEMALAN",
-                            "HISPANIC/LATINO - HONDURAN", "HISPANIC/LATINO - MEXICAN", 
-                            "HISPANIC/LATINO - PUERTO RICAN", "HISPANIC/LATINO - SALVADORAN"),
-               WHITE = c("WHITE", "WHITE - BRAZILIAN", "WHITE - EASTERN EUROPEAN", 
+               HISPANIC = c("HISPANIC OR LATINO",
+                            "HISPANIC/LATINO - CENTRAL AMERICAN",
+                            "HISPANIC/LATINO - COLUMBIAN",
+                            "HISPANIC/LATINO - CUBAN",
+                            "HISPANIC/LATINO - DOMINICAN",
+                            "HISPANIC/LATINO - GUATEMALAN",
+                            "HISPANIC/LATINO - HONDURAN",
+                            "HISPANIC/LATINO - MEXICAN", 
+                            "HISPANIC/LATINO - PUERTO RICAN",
+                            "HISPANIC/LATINO - SALVADORAN"),
+               WHITE = c("WHITE", "WHITE - BRAZILIAN",
+                         "WHITE - EASTERN EUROPEAN", 
                          "WHITE - OTHER EUROPEAN", "WHITE - RUSSIAN"),
-               Other = c("AMERICAN INDIAN/ALASKA NATIVE","MULTIPLE RACE/ETHNICITY",
+               Other = c("AMERICAN INDIAN/ALASKA NATIVE",
+                         "MULTIPLE RACE/ETHNICITY",
                          "NATIVE HAWAIIAN OR OTHER PACIFIC ISLANDER", "OTHER",
                          "PATIENT DECLINED TO ANSWER", "PORTUGUESE",
                          "SOUTH AMERICAN", "UNABLE TO OBTAIN", "UNKNOWN")
@@ -203,10 +211,11 @@ summary_table <- mimic_icu_cohort |>
          dod, Sodium, Chloride, Creatinine, Potassium,
          Glucose, Hematocrit, `White Blood Cells`, Bicarbonate, 
          `Temperature Fahrenheit`, `Non Invasive Blood Pressure diastolic`,
-         `Respiratory Rate`, `Non Invasive Blood Pressure systolic`, `Heart Rate`,
-         age_intime, los_long) |>
-  tbl_summary(by = los_long) |>
-  print(width = Inf)
+         `Respiratory Rate`, `Non Invasive Blood Pressure systolic`,
+         `Heart Rate`, age_intime, los_long) |>
+  tbl_summary(by = los_long)
+
+summary_table
 ```
 
 

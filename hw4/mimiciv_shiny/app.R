@@ -10,6 +10,7 @@ library(R.utils)
 library(tidyverse)
 library(styler)
 #getwd()
+#Connection to BigQuery database required.
 mimic_icu_cohort <- read_rds("mimic_icu_cohort.rds")
 adt <- tbl(con_bq, "transfers") 
 lab <- tbl(con_bq, "labevents") 
@@ -94,7 +95,7 @@ server <- function(input, output, session) {
       } else {
         plot <- ggplot(data, aes(x = value, y = variable)) +
           geom_boxplot(notch=TRUE) +
-          xlim(0,250) +
+          #xlim(0,250) +
           theme_minimal()
       }
     } else {
