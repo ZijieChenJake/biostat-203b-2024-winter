@@ -37,13 +37,15 @@ ui <- fluidPage(
                                         "marital_status", "race", 
                                         "hospital_expire_flag", 
                                         "gender",
+                                        "los_long", "age_intime",
                                         "Lab Events" = "labevents",
                                         "Chart Events" = "chartevents")),
                  checkboxInput("remove", 
                             "Remove outliers in IQR method for measurements?")
                ),
                mainPanel(
-                 plotOutput("summaryPlot")
+                 plotOutput("summaryPlot"),
+                 tableOutput("summaryTable")
                )
              )),
     tabPanel("Patient's ADT and ICU stay information",
@@ -63,7 +65,8 @@ server <- function(input, output, session) {
   dataReactive <- reactive({
     if(input$variable == "labevents"){
       data <- mimic_icu_cohort %>%
-        select(Potassium, Sodium, Glucose, Creatinine, Chloride, Bicarbonate) %>%
+        select(Potassium, Sodium, Glucose,
+               Creatinine, Chloride, Bicarbonate) %>%
         pivot_longer(cols = c("Potassium", "Sodium", "Glucose", "Creatinine"
                               , "Chloride", "Bicarbonate"), 
                      names_to = "variable", values_to = "value")
@@ -74,7 +77,8 @@ server <- function(input, output, session) {
                `Non Invasive Blood Pressure systolic`, `Heart Rate`) %>%
         pivot_longer(cols = c(`Temperature Fahrenheit`, 
                               `Non Invasive Blood Pressure diastolic`, 
-                              `Respiratory Rate`, `Non Invasive Blood Pressure systolic`
+                              `Respiratory Rate`
+                              , `Non Invasive Blood Pressure systolic`
                               , `Heart Rate`), 
                      names_to = "variable", values_to = "value")
     } else {
@@ -105,10 +109,31 @@ server <- function(input, output, session) {
         theme_minimal()
     }
     print(plot)
-  })  
+  })
+  
+  output$summaryTable <- render_gt({
+    if(input$variable %in% c("labevents", "chartevents")){
+    data <- dataReactive()
+    variable <- input$variable
+    tbl_summary(data, by = variable) %>%
+    add_stat_label() %>%
+    add_n() %>%
+    as_gt()
+    } else{
+      variable <- input$variable
+      mimic_icu_cohort %>%
+        group_by(!!sym(variable)) %>%
+        summarise(Count = n(),
+                  Proportion = n()/nrow(mimic_icu_cohort)) %>%
+        arrange(desc(Count))
+   }
+  })
 #Second Tab
-   patient_ids <- patients %>% select(subject_id) %>% collect() %>% pull(subject_id)
-   updateSelectizeInput(session, "patientID", choices = patient_ids, server = TRUE)
+   patient_ids <- patients %>% 
+     select(subject_id) %>% 
+     collect() %>% pull(subject_id)
+   updateSelectizeInput(session, "patientID",
+                        choices = patient_ids, server = TRUE)
     dataReactive2 <- reactive({
       sid <- as.numeric(input$patientID)
       sid_info <- patients %>%
@@ -170,11 +195,14 @@ server <- function(input, output, session) {
         title = str_c(
           "Patient ", data2$sid, ", ",
           data2$sid_info$gender, ", ",
-          data2$sid_info$anchor_age + year(data2$sid_adm$admittime[1]) - data2$sid_info$anchor_year,
+          data2$sid_info$anchor_age + 
+            year(data2$sid_adm$admittime[1]) - 
+            data2$sid_info$anchor_year,
           " years old, ",
           str_to_lower(data2$sid_adm$race[1])
         ),
-        subtitle = str_c(str_to_lower(data2$sid_diag$long_title[1:3]), collapse = "\n"),
+        subtitle = str_c(str_to_lower(data2$sid_diag$long_title[1:3]),
+                         collapse = "\n"),
                          x = "Calendar date",
                          y = "",
                          color = "Care unit",

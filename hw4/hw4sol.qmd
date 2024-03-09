@@ -99,7 +99,8 @@ d_labitems <- tbl(con_bq, "d_labitems")
 
 labevents_tble <- tbl(con_bq, "labevents") |>
   select(subject_id, itemid, valuenum, storetime) |>
-  filter(itemid %in% c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)) |>
+  filter(itemid %in% c(50912, 50971, 50983, 50902, 
+                       50882, 51221, 51301, 50931)) |>
   semi_join(icustays_tble, by = "subject_id") |>
   left_join(icustays_tble, by = "subject_id") |>
   group_by(subject_id, stay_id, itemid) |>
@@ -109,7 +110,8 @@ labevents_tble <- tbl(con_bq, "labevents") |>
   ungroup() |>
   select(subject_id, stay_id, itemid, valuenum) |>
   left_join(d_labitems, by = "itemid") |>
-  filter(itemid %in% c(50912, 50971, 50983, 50902, 50882, 51221, 51301, 50931)) |>
+  filter(itemid %in% c(50912, 50971, 50983, 50902, 
+                       50882, 51221, 51301, 50931)) |>
   select(subject_id, stay_id, label, valuenum) |>
   pivot_wider(names_from = label, values_from = valuenum) |>
   arrange(subject_id, stay_id) |>
