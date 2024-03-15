@@ -1,0 +1,101 @@
+---
+title: "Biostat 203B Homework 5"
+subtitle: Due Mar 22 @ 11:59PM
+author: "Zijie Chen 305975150"
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+    number-sections: false
+    toc: true
+    toc-depth: 4
+    toc-location: left
+    code-fold: false
+---
+
+## Predicting ICU duration
+
+Using the ICU cohort `mimiciv_icu_cohort.rds` you built in Homework 4, develop at least three machine learning approaches (logistic regression with enet regularization, random forest, boosting, SVM, MLP, etc) plus a model stacking approach for predicting whether a patient's ICU stay will be longer than 2 days. You should use the `los_long` variable as the outcome. You algorithms can use patient demographic information (gender, age at ICU `intime`, marital status, race), ICU admission information (first care unit), the last lab measurements before the ICU stay, and first vital measurements during ICU stay as features. You are welcome to use any feature engineering techniques you think are appropriate; but make sure to not use features that are not available at an ICU stay's `intime`. For instance, `last_careunit` cannot be used in your algorithms. 
+
+#1. Data preprocessing and feature engineering.
+
+###Library
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(ggplot2)
+library(corrplot)
+library(ggthemes)
+library(naniar)
+library(kableExtra)
+library(ISLR)
+library(ISLR2)
+library(glmnet)
+library(themis)
+library(discrim)
+library(corrplot)
+library(modeldata)
+library(janitor)
+library(xgboost)
+library(ranger)
+library(vip)
+library(corrplot)
+library(gtsummary)
+tidymodels_prefer()
+```
+
+###EDA
+```{r}
+mimic_icu_cohort <- read_rds("mimic_icu_cohort.rds")
+head(mimic_icu_cohort)
+dim(mimic_icu_cohort)
+colnames(mimic_icu_cohort)
+summary_table <- mimic_icu_cohort %>% 
+  select(first_careunit, los, admission_type,
+         admission_location, discharge_location, insurance, language,
+         marital_status, race, hospital_expire_flag, gender,
+         dod, Sodium, Chloride, Creatinine, Potassium,
+         Glucose, Hematocrit, `White Blood Cells`, Bicarbonate, 
+         `Temperature Fahrenheit`, `Non Invasive Blood Pressure diastolic`,
+         `Respiratory Rate`, `Non Invasive Blood Pressure systolic`,
+         `Heart Rate`, age_intime, los_long) |>
+  tbl_summary(by = los_long)
+summary_table
+colSums(is.na(mimic_icu_cohort))
+```
+###Feature Engineering
+
+We only use features that are available at an ICU stay's intime, so we drop 
+last_careunit,dod and also we have to remove los because it is a target variable.
+deathtime, edregtime and edouttime are also removed since they have too many missing values.
+I would drop all rows with missing values. Since impute too many missing values will make
+the model biased. 
+
+```{r}
+mimiciv_icu_cohort <- mimic_icu_cohort %>%
+  select(-c(last_careunit,dod,los,deathtime,edregtime,edouttime)) %>% 
+  drop_na()
+```
+
+
+
+#2. Partition data into 50% training set and 50% test set. Stratify partitioning according to `los_long`. For grading purpose, sort the data by `subject_id`, `hadm_id`, and `stay_id` and use the seed `203` for the initial data split. Below is the sample code.
+```{r}
+#| eval: false
+set.seed(203)
+
+# sort
+mimiciv_icu_cohort <- mimiciv_icu_cohort |>
+  arrange(subject_id, hadm_id, stay_id)
+
+data_split <- initial_split(
+  mimiciv_icu_cohort, 
+  # stratify by los_long
+  strata = "los_long", 
+  prop = 0.5
+  )
+```
+
+#3. Train and tune the models using the training set.
+
+#4. Compare model classification performance on the test set. Report both the area under ROC curve and accuracy for each machine learning algorithm and the model stacking. Interpret the results. What are the most important features in predicting long ICU stays? How do the models compare in terms of performance and interpretability?
