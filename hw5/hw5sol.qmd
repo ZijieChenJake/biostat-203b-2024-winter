@@ -19,7 +19,7 @@ Using the ICU cohort `mimiciv_icu_cohort.rds` you built in Homework 4, develop a
 
 #1. Data preprocessing and feature engineering.
 
-###Library
+### Library
 ```{r}
 library(tidyverse)
 library(tidymodels)
@@ -47,7 +47,7 @@ library(stacks)
 tidymodels_prefer()
 ```
 
-###EDA
+### EDA
 ```{r}
 mimic_icu_cohort <- read_rds("mimic_icu_cohort.rds")
 head(mimic_icu_cohort)
@@ -66,7 +66,7 @@ summary_table <- mimic_icu_cohort %>%
 summary_table
 colSums(is.na(mimic_icu_cohort))
 ```
-###Feature Engineering
+### Feature Engineering
 
 ```{r}
 #unique(mimic_icu_cohort$admit_provider_id)
@@ -156,7 +156,7 @@ dim(Mimic_test)
 
 #3. Train and tune the models using the training set.
 
-###Recipe
+### Recipe
 
 ```{r}
 mimic_recipe <-
@@ -171,7 +171,7 @@ mimic_recipe <-
 mimic_recipe %>% bake(Mimic_other) 
 ```
 
-###Model
+### Model
 
 ```{r}
 logit_mod <- 
@@ -212,7 +212,7 @@ gb_mod <-
   print()
 ```
 
-###Workflow
+### Workflow
 
 ```{r}
 logit_wf <- workflow() %>%
@@ -236,7 +236,7 @@ gb_wf <- workflow() %>%
   print()
 ```
 
-###Tuning grid
+### Tuning grid
 
 ```{r}
 logit_param_grid <- grid_regular(
@@ -264,16 +264,16 @@ gb_param_grid <- grid_regular(
   )
 ```
 
-###Cross_validation
+### Cross_validation
 
 ```{r}
 set.seed(203)
 folds <- vfold_cv(Mimic_other, v = 5)
 ```
 
-####logistic regression with enet regularization
+#### logistic regression with enet regularization
 ```{r}
-#| eval: FALSE
+#| eval: True
 logit_fit <- logit_wf %>%
   tune_grid(
     resamples = folds,
@@ -294,9 +294,9 @@ best_logit <- logit_fit %>%
   select_best("roc_auc")
 ```
 
-####Random forest
+#### Random forest
 ```{r}
-#| eval: FALSE
+#| eval: True
 rf_fit <- rf_wf %>%
   tune_grid(
     resamples = folds,
@@ -317,9 +317,9 @@ best_rf <- rf_fit %>%
   select_best("roc_auc")
 ```
 
-####MLP
+#### MLP
 ```{r}
-#| eval: FALSE
+#| eval: True
 mlp_fit <- mlp_wf %>%
   tune_grid(
     resamples = folds,
@@ -340,10 +340,10 @@ best_mlp <- mlp_fit %>%
   select_best("roc_auc")
 ```
 
-####Boosting
+#### Boosting
 
 ```{r}
-#| eval: FALSE
+#| eval: True
 gb_fit <- gb_wf %>%
   tune_grid(
     resamples = folds,
@@ -364,10 +364,10 @@ best_gb <- gb_fit %>%
   select_best("roc_auc")
 ```
 
-####Model Stacking
+#### Model Stacking
 
 ```{r}
-#| eval: FALSE
+#| eval: True
 logit_res <- 
   tune_grid(
     object = logit_wf, 
@@ -411,7 +411,7 @@ autoplot(mimic_model_st, type = "weights")
 ### Finalize our model
 
 ```{r}
-#| eval: FALSE
+#| eval: True
 final_log_wf <- logit_wf %>%
   finalize_workflow(best_logit)
 
@@ -448,37 +448,38 @@ mimic_pred <- Mimic_test %>%
 #4. Compare model classification performance on the test set. Report both the area under ROC curve and accuracy for each machine learning algorithm and the model stacking. Interpret the results. What are the most important features in predicting long ICU stays? How do the models compare in terms of performance and interpretability?
 
 
-####logistic regression with enet regularization
+#### logistic regression with enet regularization
 ```{r}
-#| eval: FALSE
+#| eval: True
 final_log_fit %>%
   collect_metrics()
 ```
 
-####Random forest
+#### Random forest
 ```{r}
-#| eval: FALSE
+#| eval: True
 final_rf_fit %>%
   collect_metrics()
 ```
 
-####MLP
+#### MLP
 ```{r}
-#| eval: FALSE
+#| eval: True
 final_mlp_fit %>%
   collect_metrics()
 ```
 
-####Boosting
+#### Boosting
 ```{r}
-#| eval: FALSE
+#| eval: True
 final_gb_fit %>%
   collect_metrics()
 ```
 
-####Model Stacking
+#### Model Stacking
+
 ```{r}
-#| eval: FALSE
+#| eval: True
 yardstick::roc_auc(
   mimic_pred,
   truth = los_long,
