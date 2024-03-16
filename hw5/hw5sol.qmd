@@ -43,6 +43,7 @@ library(keras)
 library(corrplot)
 library(gtsummary)
 library(tensorflow)
+library(stacks)
 tidymodels_prefer()
 ```
 
@@ -195,9 +196,19 @@ mlp_mod <-
     mode = "classification",
     hidden_units = tune(),
     dropout = tune(),
-    epochs = 50,
+    epochs = 5,
   ) %>%
   set_engine("keras", verbose = 0) %>%
+  print()
+
+gb_mod <- 
+  boost_tree(
+    mode = "classification",
+    trees = 200, 
+    tree_depth = tune(),
+    learn_rate = tune()
+  ) %>%
+  set_engine("xgboost") %>%
   print()
 ```
 
@@ -218,6 +229,11 @@ mlp_wf <- workflow() %>%
   add_recipe(mimic_recipe) %>% 
   add_model(mlp_mod) %>%
   print()
+
+gb_wf <- workflow() %>%
+  add_recipe(mimic_recipe) %>% 
+  add_model(gb_mod) %>%
+  print()
 ```
 
 ###Tuning grid
@@ -236,11 +252,16 @@ rf_param_grid <- grid_regular(
   )
 
 mlp_param_grid <- grid_regular(
-  hidden_units(range = c(1, 5)),
-  dropout(range = c(0, 0.6)),
-  levels = 3
+  hidden_units(range = c(1, 3)),
+  dropout(range = c(0, 0.2)),
+  levels = 2
   )
 
+gb_param_grid <- grid_regular(
+  tree_depth(range = c(1L, 3L)),
+  learn_rate(range = c(-5, 2), trans = log10_trans()),
+  levels = c(3, 10)
+  )
 ```
 
 ###Cross_validation
@@ -252,7 +273,7 @@ folds <- vfold_cv(Mimic_other, v = 5)
 
 ####logistic regression with enet regularization
 ```{r}
-#| eval: True
+#| eval: FALSE
 logit_fit <- logit_wf %>%
   tune_grid(
     resamples = folds,
@@ -275,7 +296,7 @@ best_logit <- logit_fit %>%
 
 ####Random forest
 ```{r}
-#| eval: True
+#| eval: FALSE
 rf_fit <- rf_wf %>%
   tune_grid(
     resamples = folds,
@@ -319,10 +340,78 @@ best_mlp <- mlp_fit %>%
   select_best("roc_auc")
 ```
 
+####Boosting
+
+```{r}
+#| eval: FALSE
+gb_fit <- gb_wf %>%
+  tune_grid(
+    resamples = folds,
+    grid = gb_param_grid,
+    metrics = metric_set(roc_auc, accuracy)
+    )
+
+gb_fit %>%
+  collect_metrics() %>%
+  print(width = Inf) %>%
+  filter(.metric == "roc_auc") %>%
+  ggplot(mapping = aes(x = learn_rate, y = mean, color = factor(tree_depth))) +
+  geom_point() +
+  labs(x = "Learning Rate", y = "CV AUC") +
+  scale_x_log10()
+
+best_gb <- gb_fit %>%
+  select_best("roc_auc")
+```
+
+####Model Stacking
+
+```{r}
+#| eval: FALSE
+logit_res <- 
+  tune_grid(
+    object = logit_wf, 
+    resamples = folds, 
+    grid = logit_param_grid,
+    control = control_stack_grid()
+  )
+
+rf_res <-
+  tune_grid(
+    object = rf_wf,
+    resamples = folds,
+    grid = rf_param_grid,
+    control = control_stack_grid()
+  )
+
+gb_res <-
+  tune_grid(
+    object = gb_wf,
+    resamples = folds,
+    grid = gb_param_grid,
+    control = control_stack_grid()
+  )
+
+mimic_model_st <-
+  stacks() %>%
+  add_candidates(logit_res) %>%
+  add_candidates(rf_res) %>%
+  add_candidates(gb_res) %>%
+  blend_predictions(
+    penalty = 10^(-6:2),
+    metrics = c("roc_auc", "accuracy")
+  ) %>%
+  fit_members()
+
+autoplot(mimic_model_st)
+autoplot(mimic_model_st, type = "weights")
+```
+
 
 ### Finalize our model
 
 ```{r}
+#| eval: FALSE
 final_log_wf <- logit_wf %>%
   finalize_workflow(best_logit)
 
@@ -336,6 +425,23 @@ final_rf_wf <- rf_wf %>%
 final_rf_fit <-
   final_rf_wf %>%
   last_fit(data_split)
+
+final_mlp_wf <- mlp_wf %>%
+  finalize_workflow(best_mlp)
+
+final_mlp_fit <-
+  final_mlp_wf %>%
+  last_fit(data_split)
+
+final_gb_wf <- gb_wf %>%
+  finalize_workflow(best_gb)
+
+final_gb_fit <-
+  final_gb_wf %>%
+  last_fit(data_split)
+
+mimic_pred <- Mimic_test %>%
+  bind_cols(predict(mimic_model_st, ., type = "prob"))
 ```
 
 
@@ -344,15 +450,38 @@ final_rf_fit <-
 
 ####logistic regression with enet regularization
 ```{r}
+#| eval: FALSE
 final_log_fit %>%
   collect_metrics()
 ```
 
 ####Random forest
 ```{r}
+#| eval: FALSE
 final_rf_fit %>%
   collect_metrics()
 ```
 
+####MLP
+```{r}
+#| eval: FALSE
+final_mlp_fit %>%
+  collect_metrics()
+```
 
+####Boosting
+```{r}
+#| eval: FALSE
+final_gb_fit %>%
+  collect_metrics()
+```
 
+####Model Stacking
+```{r}
+#| eval: FALSE
+yardstick::roc_auc(
+  mimic_pred,
+  truth = los_long,
+  contains(".pred_False")
+)
+```
