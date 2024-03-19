@@ -198,7 +198,7 @@ rf_mod <-
     mtry = tune(),
     trees = tune()
   ) %>%
-  set_engine("ranger") %>%
+  set_engine("ranger", importance = "impurity") %>%
   print()
 
 mlp_mod <- 
@@ -262,13 +262,13 @@ rf_param_grid <- grid_regular(
   )
 
 mlp_param_grid <- grid_regular(
-  hidden_units(range = c(1, 4)),
-  dropout(range = c(0, 0.2)),
+  hidden_units(range = c(1, 20)),
+  dropout(range = c(0, 0.6)),
   levels = 3
   )
 
 gb_param_grid <- grid_regular(
-  tree_depth(range = c(1L, 4L)),
+  tree_depth(range = c(1L, 6L)),
   learn_rate(range = c(-5, 2), trans = log10_trans()),
   levels = c(3, 10)
   )
@@ -384,7 +384,7 @@ best_gb <- gb_fit %>%
 
 mimic_model_st <-
   stacks() %>%
-  add_candidates(logit_fit) %>%
+  #add_candidates(logit_fit) %>%
   add_candidates(rf_fit) %>%
   add_candidates(gb_fit) %>%
   blend_predictions(
@@ -476,3 +476,63 @@ yardstick::roc_auc(
   contains(".pred_False")
 )
 ```
+### Model Performance Analysis
+
+Let's take a look at the feature importance of our models.
+
+We can see form the logistic model that the most important feather is non invasive blood pressure systolic and follow
+with first_careunit. However, the logistic model didn't perform well in the test set. So we can't trust the feature importance from logistic model.
+```{r}
+final_log <- extract_workflow(final_log_fit)
+final_log %>% 
+  extract_fit_parsnip() %>% 
+  vip()
+```
+
+The boosting tree model shows that the most important feather is temperature Fahrenheit and 
+follow with non invasive blood pressure systolic which is also the most important feather in the logistic model.
+Other important feathers are mainly the the last lab measurements before the ICU stay, and first vital measurements during ICU stay
+```{r}
+final_tree <- extract_workflow(final_gb_fit)
+final_tree %>% 
+  extract_fit_parsnip() %>% 
+  vip()
+```
+
+The random forest model shows that the most important feather is heart rate and follow with non invasive blood pressure systolic. However, there are no such big difference between importance of feathers in random forest model. Last lab measurements before the ICU stay, and first vital measurements during ICU stay are still dominate feathers.
+
+```{r}
+final_rf <- extract_workflow(final_rf_fit)
+final_rf %>% 
+  extract_fit_parsnip() %>% 
+  vip()
+```
+We have 
+Logistic Regression with Elastic Net Regularization:
+Accuracy: 0.5837
+ROC AUC: 0.6149
+
+Random Forest:
+Accuracy: 0.6139
+ROC AUC: 0.6583
+
+Multilayer Perceptron (MLP):
+Accuracy: 0.5981
+ROC AUC: 0.6309
+
+Boosting:
+Accuracy: 0.6197
+ROC AUC: 0.6653
+
+Model Stacking:
+ROC AUC: 0.6705 
+
+The model stacking approach has the highest ROC AUC, suggesting it may be the best at discriminating between the two classes. Gradient boosting follows closely in terms of ROC AUC and has the highest accuracy among the individual models.
+
+The logistic regression model, while typically more interpretable due to its linear nature and direct coefficient significance, appears to be the least accurate in this case. The MLP shows an ROC AUC that is moderately good, but its accuracy is lower than that of the random forest and boosting models.
+
+From the feature importance analysis, we can see all three models agree that non invasive blood pressure systolic is one of the most important features in predicting long ICU stays. The last lab measurements before the ICU stay and first vital measurements during ICU stay are also in top important features. This suggests that the last lab measurements before the ICU stay and first vital measurements during ICU stay are important indicators of the patient's condition and may be useful in predicting long ICU stays.
+
+In this case, the trade-off between performance and interpretability is clear. While the model stacking approach gives the best ROC AUC, it does so at the cost of interpretability. On the other hand, logistic regression offers ease of interpretation but doesn't perform as well. The gradient boosting model presents a good balance, with relatively high performance metrics and a degree of interpretability through feature importance scores.
+
+
